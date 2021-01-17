@@ -13,7 +13,7 @@ Every offer has a validity period before the offer expires. As an example, a BOG
 You'll be given transactional data showing user purchases made on the app including the timestamp of purchase and the amount of money spent on a purchase. This transactional data also has a record for each offer that a user receives as well as a record for when a user actually views the offer. There are also records for when a user completes an offer. 
 
 Keep in mind as well that someone using the app might make a purchase through the app without having received an offer or seen an offer.
-
+    
 ### Example
 
 To give an example, a user could receive a discount offer buy 10 dollars get 2 off on Monday. The offer is valid for 10 days from receipt. If the customer accumulates at least 10 dollars in purchases during the validity period, the customer completes the offer.

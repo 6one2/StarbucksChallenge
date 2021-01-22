@@ -1,6 +1,6 @@
 # __An Exploratory Analysis of Starbucks Simulated Customer Interactions with Mobile Application__
 
-![Image](Documents/Perso/2020_DataScience_Class/Udacity_nanoDegree/Projects/Project4_CapstoneProject/docs/assets/FreeStarbucksDrink.jpg)
+![Image](./assets/FreeStarbucksDrink.jpg)
 
 ### Background
 

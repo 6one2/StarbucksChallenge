@@ -1,20 +1,17 @@
 # __An Exploratory Analysis of Starbucks Simulated Customer Interactions with Mobile Application__
 
-
+![Image](Documents/Perso/2020_DataScience_Class/Udacity_nanoDegree/Projects/Project4_CapstoneProject/docs/assets/FreeStarbucksDrink.jpg)
 
 ### Background
 
 In the final project for my DataScience degree at [Udacity](https://www.udacity.com/course/data-scientist-nanodegree--nd025), I had access to a data set containing simulated data that mimics customer behavior on the Starbucks rewards mobile app. Over the period of 30 days, Starbucks sends out 0 to 6 offers to users of the mobile app. An offer can be merely an advertisement for a drink (called `informational` offer) or an actual offer such as a `discount` or `bogo` (buy one get one free).
 
 Associated with the time-line of events for all participants, came the demographic profile of each individuals with details on their `gender`, `age`, `income`, the date their profile was registered on the app (`become_member_on`).
-
 In order to drive customer to the stores, it is paramount to understand how each customer interacts with the app, and in particular how each customer reacts to a specific offer. 
-
 We first, focused our interested on how often the offers were viewed, and secondly if this was leading to some kind of convertion into sales.
 
 Our approach was first exploratory, and therefore we tried to visualize clusters of behavior among  customers groups. We then tried to model these behaviors to predict how future participants might interact with each offer.
-
-
+    
 ```
 Every offer has a validity period before the offer expires. As an example, a BOGO offer might be valid for only 5 days. You'll see in the data set that informational offers have a validity period even though these ads are merely providing information about a product; for example, if an informational offer has 7 days of validity, you can assume the customer is feeling the influence of the offer for 7 days after receiving the advertisement.
 

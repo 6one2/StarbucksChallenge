@@ -1,6 +1,9 @@
-# __An Exploratory Analysis of Starbucks Simulated Customer Interactions with Mobile Application__
+<div>
+<h1 style="font-weight: bold">An Exploratory Analysis of Starbucks Simulated Customer Interactions with Mobile Application</h1>
+<img src="./assets/niels-kehl-6hpbjaAubDc-unsplash.jpg" max-width="100%"></img>
+<span>Photo by <a href="https://unsplash.com/@photographybyniels?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Niels Kehl</a> on <a href="https://unsplash.com/s/photos/starbucks?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+</div>
 
-![Image](./assets/FreeStarbucksDrink.jpg)
 
 ### Background
 
@@ -26,7 +29,8 @@ To give an example, a user could receive a discount offer buy 10 dollars get 2 o
 
 However, there are a few things to watch out for in this data set. Customers do not opt into the offers that they receive; in other words, a user can receive an offer, never actually view the offer, and still complete the offer. For example, a user might receive the "buy 10 dollars get 2 dollars off offer", but the user never opens the offer during the 10 day validity period. The customer spends 15 dollars during those ten days. There will be an offer completion record in the data set; however, the customer was not influenced by the offer because the customer never viewed the offer.
 
-![Image](./assets/Timeline.png)
+
+<img src="./assets/Timeline.png" max-width=100%></img>
 
 ### Cleaning
 

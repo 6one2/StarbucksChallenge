@@ -34,23 +34,31 @@ Figure 1. Time-line of events for one customer. Red lines represent the receptio
 </p>
 </div>
 
-However, there are a few things to watch out for in this data set:
+However, there are a few things to watch out for in this data set and in our analysis:
 - Customers do not opt into the offers that they receive; in other words, a user can receive an offer, never actually view the offer, and still complete the offer. For example, a user might receive the "buy 10 dollars get 2 dollars off offer", but the user never opens the offer during the 10 day validity period. The customer spends 15 dollars during those ten days. There will be an offer completion record in the data set; however, the customer was not influenced by the offer because the customer never viewed the offer. This will require to filter out the completions that occured before an offer is viewed.
 
-- The completion is straight forward for the `bogo` and `discount` offers, and we will use this indicator to measure success in this cases. However, the measurement of success for the `informational` requires much more discussion as many metrics of success can be implemented.
+- The data set actually differentiates 10 offers (4 `bogo`, 4 `discount`, and 2 `informational`). The specificity of each offer is found in its _difficulty_ (amount of dollars needed to complete the offer), and its _duration_ (number of days of activity). Since the goal of this analysis was to find which offer was prefered by which customer and not to address the effect of difficulty and duration per se, we decided to group them together and simplify our analysis by looking at the overall response to `bogo`, `discount`, and `informational` offers.
+
+- Distribution of offers type:
+<div style="width: 100%; overflow: hidden;">
+     <div style="width:40% ; float: left; text-align: right"> <img src="./assets/offer_dist.png" width="200px"></div>
+    <div style="margin-left:45%"> Considering that you can find 4 offers in <code>bogo</code>, 4 offers in <code>discount</code> but only 2 offers in <code>informational</code>, we can conclude that all offers sub-types were equally present.</div>
+</div>
+
+- The completion is straight forward for the `bogo` and `discount` offers, and we will use this indicator to measure success in this cases. However, the measurement of success for the `informational` offers requires much more discussion as many metrics of success can be implemented.
 
 
+### __Offer Response__
 
-### __Cleaning__
-
+After filtering out customers with no demographic information (n = 2,175), the few customers that never received any offers (n = 5), and the customers that did not made any transactions (n = 333), we found that 88% of the 14,487 customers left viewed all the offers presented to them, and more than 99% of them viewed over 66% of the offers preswented to them. 
 
 <div>
 <p style="text-align:center; font-family:courier; font-size:150%">
-    "This makes data cleaning especially important and tricky"
+    "$88\%$ of the participants viewed all the offers presented to them, and over $99\%$ viewed more than $66\%$ of the offers presented"
 </p>
 </div>
 
-You'll also want to take into account that some demographic groups will make purchases even if they don't receive an offer. From a business perspective, if a customer is going to make a 10 dollar purchase without an offer anyway, you wouldn't want to send a buy 10 dollars get 2 dollars off offer. You'll want to try to assess what a certain demographic group will buy when not receiving any offers.
+With an average viewing rate of 97% accross all offers, we can conclude that all offers were viewed by all customers. We can focus our attention to the convertion from viewing to actual sales.
 
 ### __Final Advice__
 

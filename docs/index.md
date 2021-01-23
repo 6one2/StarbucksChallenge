@@ -1,5 +1,5 @@
 <div max-width="100%">
-<img src="./assets/niels-kehl-6hpbjaAubDc-unsplash.jpg" max-width="100%">
+<img src="./assets/niels-kehl-6hpbjaAubDc-unsplash.jpg" width="100%">
 <span>Photo by <a href="https://unsplash.com/@photographybyniels?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Niels Kehl</a> on <a href="https://unsplash.com/s/photos/starbucks?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 </div>
 
@@ -28,7 +28,7 @@ In the picture below (figure 1) you'll find the time-line of events for one cust
 To give an example, a user could receive a discount offer _buy 10 dollars get 2 off_. The offer is valid for 10 days from receipt. If the customer accumulates at least 10 dollars in purchases during the validity period, the customer completes the offer.
 
 <div max-width="100%">
-<img src="./assets/Timeline.png" max-width="100%">
+<img src="./assets/Timeline.png" width="100%">
 <p style="text-align:center; font-style:italic">
 Figure 1. Time-line of events for one customer. Red lines represent the reception of an offer. Blue lines represent the moment the offer was viewed. Yellow lines show when an offer was completed. Black lines (solid and dashed) represent the occurence of a transaction.
 </p>

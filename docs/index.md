@@ -4,7 +4,7 @@
 </div>
 
 
-### __Background__
+# __Background__
 
 In the final project for my DataScience degree at [Udacity](https://www.udacity.com/course/data-scientist-nanodegree--nd025), I had access to a data set containing simulated data that mimics customer behavior on the Starbucks rewards mobile app. Over the period of 30 days, Starbucks sends out 0 to 6 offers to users of the mobile app. An offer can be merely an advertisement for a drink (called `informational` offer) or an actual offer such as a `discount` or `bogo` (buy one get one free).
 
@@ -22,7 +22,7 @@ You'll be given transactional data showing user purchases made on the app includ
 Keep in mind as well that someone using the app might make a purchase through the app without having received an offer or seen an offer. -->
 
     
-### __What an interaction looks like ?__
+# __What an interaction looks like ?__
 
 In the picture below (figure 1) you'll find the time-line of events for one customer. You'll see 4 offers (3 `bogo` and 1 `discount`). All offers have specific durations (in this exmaple: 7, 3, 7, and 5 days respectively). they also have different level of difficulty, or amount that need to be spent to be rewarded.
 To give an example, a user could receive a discount offer _buy 10 dollars get 2 off_. The offer is valid for 10 days from receipt. If the customer accumulates at least 10 dollars in purchases during the validity period, the customer completes the offer.
@@ -48,26 +48,25 @@ However, there are a few things to watch out for in this data set and in our ana
 - The completion is straight forward for the `bogo` and `discount` offers, and we will use this indicator to measure success in this cases. However, the measurement of success for the `informational` offers requires much more discussion as many metrics of success can be implemented.
 
 
-### __Offer Response__
+# __Offer Response__
 
 After filtering out customers with no demographic information (n = 2,175), the few customers that never received any offers (n = 5), and the customers that did not made any transactions (n = 333), we found that 88% of the 14,487 customers left viewed all the offers presented to them, and more than 99% of them viewed over 66% of the offers preswented to them. 
 
 <div>
 <p style="text-align:center; font-family:courier; font-size:150%">
-    "$88\%$ of the participants viewed all the offers presented to them, and over $99\%$ viewed more than $66\%$ of the offers presented"
+    "88% of the participants viewed all the offers presented to them, and over 99% viewed more than 66% of the offers presented"
 </p>
 </div>
 
 With an average viewing rate of 97% accross all offers, we can conclude that all offers were viewed by all customers. We can focus our attention to the convertion from viewing to actual sales.
 
-### __Final Advice__
+# __Offer Convertion__
 
-Because this is a capstone project, you are free to analyze the data any way you see fit. For example, you could build a machine learning model that predicts how much someone will spend based on demographics and offer type. Or you could build a model that predicts whether or not someone will respond to an offer. Or, you don't need to build a machine learning model at all. You could develop a set of heuristics that determine what offer you should send to each customer (i.e., 75 percent of women customers who were 35 years old responded to offer A vs 40 percent from the same demographic to offer B, so send offer A).
 
-### __Final Thoughts:__
+
+# __Final Thoughts:__
 
  - Not all users receive the same offer, and that is the challenge to solve with this data set.
  - simplified dataset
 
 
-### test

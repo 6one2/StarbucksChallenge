@@ -66,7 +66,7 @@ I considered a conversion when an offer was completed only after the offer was v
 <div max-width="100%">
 <img src="./assets/AgeIncome.png" width="100%">
 <p style="text-align:center; font-style:italic">
-Figure 2. Customers age versus income. The orange dots represent the customers that completed the offers (<code>bogo</code> on the left panel, and <code>discount</code> on the right panel) and blue dots represent customers that did not completed the offers. The size of the dots represent the gender of the customers.
+Figure 2. Customers age versus income. The orange dots represent the customers that completed the <code>bogo</code> offers and blue dots represent customers that did not completed the offers. The size of the dots represent the gender of the customers.
 </p>
 </div>
 
@@ -75,8 +75,8 @@ Figure 2. Customers age versus income. The orange dots represent the customers t
 </div>
 
 <div style= "max-width: 100%; overflow: hidden;">
-    <div style="width:50% ; float: left; text-align: right"><img src="./assets/AgeIncome.png" width="100%"></div>
-    <div style="margin-left:50%; text-align: center"><img src="./assets/AgeIncome.png" width="100%"></div>
+    <div style="width:50% ; float: left; text-align: right"><img src="./assets/AgeMember.png" width="100%"></div>
+    <div style="margin-left:50%; text-align: center"><img src="./assets/MemberIncome.png" width="100%"></div>
 <!-- <img src="./assets/AgeIncome.png" width="100%"> -->
 <p style="text-align:center; font-style:italic">
 Figure 3. Caption.

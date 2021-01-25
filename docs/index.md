@@ -63,15 +63,13 @@ As mentioned earlier the conversion for both the `bogo` and the `discount` offer
 
 I considered a conversion when an offer was completed only after the offer was viewed. The overall conversion rate was 41.5% for the `bogo` offers and 46.1% for the `discount` offers. I then labeled customers as successful at converting the offer if they showed individually 50% or higher conversion rate.
 
+I decided to explore visually the distribution of the conversions over the different demographics looking at income vs. age (Figure 2), age vs. registration date (Figure 3, left), and income vs. registration date (Figure 3, right).
+
 <div max-width="100%">
 <img src="./assets/AgeIncome.png" width="100%">
 <p style="text-align:center; font-style:italic">
-Figure 2. Customers age versus income. The orange dots represent the customers that completed the <code>bogo</code> offers and blue dots represent customers that did not completed the offers. The size of the dots represent the gender of the customers.
+Figure 2. Customers age vs. income. The orange dots represent the customers that completed the <code>bogo</code> offers and blue dots represent customers that did not completed the offers. The size of the dots represent the gender of the customers.
 </p>
-</div>
-
-<div style="width: 100%; overflow: hidden;">
-
 </div>
 
 <div style= "max-width: 100%; overflow: hidden;">
@@ -79,9 +77,17 @@ Figure 2. Customers age versus income. The orange dots represent the customers t
     <div style="margin-left:50%; text-align: center"><img src="./assets/MemberIncome.png" width="100%"></div>
 <!-- <img src="./assets/AgeIncome.png" width="100%"> -->
 <p style="text-align:center; font-style:italic">
-Figure 3. Caption.
+Figure 3. Registration date vs. Age (left panel) and Registration date vs. Income (right panel) for the <code>bogo</code> offers.
 </p>
 </div>
+
+Figure 2, and Figure 3 represent only the `bogo` offers, but similar patterns can be seen for the `discount` offers. These scatter plots show rather clear "brackets" in the different categories:
+ - __age breaks__ can be seen at 36 (first income break), 48 (second income break), and 75 years of age (thinning of the population).
+ - __income breaks__ can be seen at 50k (increase in number of conversion), 75k, and 100k
+ - __registration breaks__ be seen August 1<sup>st</sup> 2015, and August 1<sup>st</sup> 2017. Both dates show large increases in registration.
+
+I then segregated the customers demographics into these brackets and computed the conversion rate for each groups.
+
 
 # __Final Thoughts:__
 

@@ -74,7 +74,7 @@ Figure 2. Customers age versus income. The orange dots represent the customers t
 
 </div>
 
-<div max-width="100%">
+<div style= "max-width: 100%; overflow: hidden;">
     <div style="width:50% ; float: left; text-align: right"><img src="./assets/AgeIncome.png" width="100%"></div>
     <div style="margin-left:50%; text-align: center"><img src="./assets/AgeIncome.png" width="100%"></div>
 <!-- <img src="./assets/AgeIncome.png" width="100%"> -->

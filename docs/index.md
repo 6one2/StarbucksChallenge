@@ -88,6 +88,9 @@ Figure 2, and Figure 3 represent only the `bogo` offers, but similar patterns ca
 
 I then segregated the customers demographics into these brackets and computed the conversion rate for each groups.
 
+<div style="text-align:center">
+<img src="./assets/res_table_spending.png" width="600px">
+</div>
 
 # __Final Thoughts:__
 

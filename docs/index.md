@@ -86,10 +86,36 @@ Figure 2, and Figure 3 represent only the `bogo` offers, but similar patterns ca
  - __income breaks__ can be seen at 50k (increase in number of conversion), 75k, and 100k
  - __registration breaks__ be seen August 1<sup>st</sup> 2015, and August 1<sup>st</sup> 2017. Both dates show large increases in registration.
 
-I then segregated the customers demographics into these brackets and computed the conversion rate for each groups.
+I then segregated the customers demographics into these brackets and computed the conversion rate for each groups. I also computed the cumulative total spending for each category, to assess the importance of each sub-group in the analysis. Over the span of the 144 sub-groups the maximum `total_spending` was \$ 151,850.52 with a median `total_spending` of \$ 1,938.09.
+
+Looking first at the top-10 conversion rates ordered for the `bogo` offers (Table 1), we can see that the first 7 groups have perfect conversion in both `bogo` in `discount` but represent relatively small `total_spending` below the median spending.
 
 <div style="text-align:center">
+<p style="text-align:center; font-style:italic">
+Table 1. Top 10 conversion rate ordered by <code>bogo</code> offer.
+</p>
+<img src="./assets/res_table_bogo.png" width="600px">
+</div>
+<br>
+
+The top-10 conversation rates by `total_spending` (Table 2) shows that the age group 48 to 74 years old is the group that spent the most over the 30 days of observation. If the difference in conversion between `bogo` and `discount` is relatively small for the top-3, we can see interesting differences appear after the 4<sup>th</sup> row. For instance, the group of 48 to 74 years old male customers, that became member between August 2017 and August 2018 with an income ranging from 50k to 74k show a conversion rate below 50% but seem to favor the `discount` offers.
+
+
+<div style="text-align:center">
+<p style="text-align:center; font-style:italic">
+Table 2. Top 10 conversion rate ordered by <code>total_spending</code>.
+</p>
 <img src="./assets/res_table_spending.png" width="600px">
+</div>
+<br>
+
+The top-10 conversion rates by largest difference between `bogo` and `discount` (Table 3) is probably the table that would yield the best insights on how to improve the customers conversion.
+
+<div style="text-align:center">
+<p style="text-align:center; font-style:italic">
+Table 3. Top 10 conversion rate ordered by maximum percentage points difference between <code>bogo</code> and <code>discount</code>.
+</p>
+<img src="./assets/res_table_max_diff.png" width="600px">
 </div>
 
 # __Final Thoughts:__

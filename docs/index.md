@@ -16,7 +16,7 @@ I first focused my interested on how often the offers were viewed, and then on h
 My approach was first exploratory, and therefore I tried to visualize clusters of behavior among  customers groups. Then, I tried to model these behaviors to predict how future participants might interact with each offer.
 
 
-# __What an interaction looks like ?__
+# __What customer interactions look like?__
 
 In the picture below (figure 1) you'll find the time-line of events for one customer. You'll see 4 offers (3 `bogo` and 1 `discount`). All offers have specific durations (in this exmaple: 7, 3, 7, and 5 days respectively). they also have different level of difficulty, or amount that need to be spent to be rewarded.
 
@@ -88,7 +88,7 @@ Figure 2, and Figure 3 represent only the `bogo` offers, but similar patterns ca
 
 I then segregated the customers demographics into these brackets and computed the conversion rate for each groups. I also computed the cumulative total spending for each category, to assess the importance of each sub-group in the analysis. Over the span of the 144 sub-groups the maximum `total_spending` was \$ 151,850.52 with a median `total_spending` of \$ 1,938.09.
 
-Looking first at the top-10 conversion rates ordered for the `bogo` offers (Table 1), we can see that the first 7 groups have perfect conversion in both `bogo` in `discount` but represent relatively small `total_spending` below the median spending.
+Looking first at the top-10 conversion rates ordered for the `bogo` offers (Table 1), we can see that the first 7 groups have perfect conversion in both `bogo` in `discount` but represent relatively small `total_spending`.
 
 <div style="text-align:center">
 <p style="text-align:center; font-style:italic">
@@ -109,7 +109,7 @@ Table 2. Top 10 conversion rate ordered by <code>total_spending</code>.
 </div>
 <br>
 
-The top-10 conversion rates by largest difference between `bogo` and `discount` (Table 3) is probably the table that would yield the best insights on how to improve the customers conversion.
+The top-10 conversion rates by largest difference between `bogo` and `discount` (Table 3) is probably the table that would yield the best insights on how to drive future interventions. In that regard, the 48 to 74 years of age female customers that became member between July 2013 and August 2015 with an income below 50k seem not interested in the `bogo` offers but convert about 52% of the `discount` offers.
 
 <div style="text-align:center">
 <p style="text-align:center; font-style:italic">
@@ -120,5 +120,7 @@ Table 3. Top 10 conversion rate ordered by maximum percentage points difference 
 
 # __Final Thoughts:__
 
- - Not all users receive the same offer, and that is the challenge to solve with this data set.
+ - more guidance to create the relevant metric.
+ - over 60% missing data in each sub-offers (Kmeans analysis not possible; how to use k-pod).
+ - Not all users receive the same kind of offers, or the same number of offers.
  - simplified dataset

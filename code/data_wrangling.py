@@ -160,3 +160,5 @@ def find_best_offer(res_table, age=None, member=None, income=None, gender=None):
     df_out = res_table.query(str_query)
 
     return df_out
+
+

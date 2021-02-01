@@ -6,7 +6,17 @@ from datetime import datetime, timedelta
 
 def load_data(data_path):
     '''
+    load, filter and format portfolio, profile and transcript data
+    
+    INPUT
+    data_path - path to folder containing portfolio, profile, and transcript files
+    
+    OUTPUT
+    PORTFOLIO - DataFrame of offers details
+    PROFILE - DataFrame of customers demographics
+    TRANSCRIPT - DataFrame of app interactions
     '''
+    
     # read in the json files
     portfolio = pd.read_json(data_path+'portfolio.json', orient='records', lines=True)
     profile = pd.read_json(data_path+'/profile.json', orient='records', lines=True)
@@ -46,6 +56,14 @@ def load_data(data_path):
 
 def expand_transcript(df):
     '''
+    expand json formated data (in column called 'value') into pandas DataFrame
+    
+    INPUT
+    df - DataFrame containg transcript(app interactions)
+    
+    OUTPUT
+    n_trans - df['value'] expanded into ['offer_id', 'amount', 'reward']
+
     '''
     # change 'offer id' in 'offer_id'
     value = df['value'].\
@@ -59,6 +77,14 @@ def expand_transcript(df):
 
 def create_features(PROFILE):
     '''
+    Creates bracketed features for 'age', 'became_member_on', and 'income'.
+    Brackets are based on scatterplot visualizations (see devStarbucks.ipynb)
+    
+    INPUT
+    PROFILE - DataFrame containing customer profile demographics
+    
+    OUTPUT
+    feat_profile - bracketed demographics
     '''
 
     feat_profile = pd.DataFrame()

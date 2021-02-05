@@ -134,7 +134,7 @@ After encoding the gender, and changing the date of registration into a time sta
 
 <div style="width: 100%; overflow: hidden; position: relative;">
     <div style="width:55% ; float: left; text-align: center;"><img src="./assets/truth_vs_preds.png" width="100%"></div>
-    <div style="margin-left:55%; text-align: center;">
+    <div style="margin-left:60%; text-align: center; margin: 0; position: absolute; top: 50%;  left: 55%; transform: translateY(-50%);">
     <p style="text-align:center; font-family:courier; font-size:150%">
         "only 62% of the variance of the test dataset was explained by our predicted values of spending"
     </p>

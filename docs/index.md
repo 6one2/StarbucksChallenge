@@ -2,7 +2,12 @@
 <img src="./assets/niels-kehl-6hpbjaAubDc-unsplash.jpg" width="100%">
 <span>Photo by <a href="https://unsplash.com/@photographybyniels?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Niels Kehl</a> on <a href="https://unsplash.com/s/photos/starbucks?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 </div>
-
+<br>
+<div style="width: 100%; overflow: hidden; position: relative;">
+    <div style="width:30% ; float: left; text-align: center; position: absolute; top: 50%; transform: translateY(-50%);"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="100px" style="border-radius: 50%; border: 5px solid #bd5d38"></a></div>
+    <div style="margin-left:35%"><h1 style="font-weight:bold">Summary</h1><p>After careful examination of customers' profile, transaction transcript, and offer details, I was able to extract relevant brackets of demographics and present top 10 conversion rates</p>
+    </div>
+</div>
 
 # __Background__
 

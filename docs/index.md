@@ -4,8 +4,8 @@
 </div>
 <br>
 <div style="width: 100%; overflow: hidden; position: relative;">
-    <div style="width:30% ; float: left; text-align: center; position: absolute; top: 50%; transform: translateY(-50%);"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="100px" style="border-radius: 50%; border: 5px solid #bd5d38"></a></div>
-    <div style="margin-left:35%"><h1 style="font-weight:bold">Summary</h1><p>After careful examination and preparation of customers' profile, transaction transcript, and offer details, I was able to extract relevant brackets of demographics and present actionable top 10 conversion rates. The effort to present a more granular quantification of the customers performance in term of spending for each offer was tempered by the scarcity of the data and the relative small number of available features.</p>
+    <div style="width:25% ; float: left; text-align: center; position: absolute; top: 50%; transform: translateY(-50%);"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="200px" style="border-radius: 50%; border: 5px solid #bd5d38"></a></div>
+    <div style="margin-left:30%"><h1 style="font-weight:bold">Summary</h1><p>In this exercise on simulated data, I extracted relevant brackets of demographics and presented actionable conversion rates for each group of offer. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the scarcity of data and the relatively small number of available features.</p>
     </div>
 </div>
 
@@ -108,7 +108,6 @@ Table 1. Top 10 conversion rates ordered by <code>bogo</code> offer.
 
 The top 10 conversation rates by `total_spending` (Table 2) show that the age group 48 to 74 years old is the group that spent the most over the 30 days of observation. If the difference in conversion between `bogo` and `discount` is relatively small for the top-3, we can see interesting differences appear after the 4<sup>th</sup> row. For instance, the group of 48 to 74 years old male customers, that became member between August 2017 and August 2018 with an income ranging from 50k to 74k show a conversion rate below 50% but seem to favor the `discount` offers.
 
-
 <div style="text-align:center">
 <p style="text-align:center; font-style:italic">
 Table 2. Top 10 conversion rates ordered by <code>total_spending</code>.
@@ -125,6 +124,23 @@ Table 3. Top 10 conversion rate ordered by maximum percentage points difference 
 </p>
 <img src="./assets/res_table_max_diff.png" width="600px">
 </div>
+
+
+# __A model of spending by offer type__
+
+In an attempt to provide quantifiable granular understanding of the spending habits of the customers and to predict the impact of each offer type on new customers, I tried to model the amount of dollar spent by offer type according to the limited number of features at my disposal (age, gender, date of registration, and income).
+
+After encoding the gender, and changing the date of registration into a time stamp in seconds, I added the individual total spending over 30 days as a features to test the relevance of a linear regression. Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yield rather poor relevance: in the best model considering the `discount` offers, only 62% of the variance of the test dataset was explained by our predicted values of spending.
+
+<div style="width: 100%; overflow: hidden; position: relative;">
+    <div style="width:55% ; float: left; text-align: center;"><img src="./assets/truth_vs_preds.png" width="100%"></div>
+    <div style="margin-left:55%; text-align: center;">
+    <p style="text-align:center; font-family:courier; font-size:150%">
+        "only 62% of the variance of the test dataset was explained by our predicted values of spending"
+    </p>
+    </div>
+</div>
+
 
 # __Final Thoughts:__
 

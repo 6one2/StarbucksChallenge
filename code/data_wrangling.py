@@ -2,21 +2,22 @@ import pandas as pd
 import numpy as np
 import re
 from datetime import datetime, timedelta
+from sqlalchemy import create_engine
 
 
 def load_data(data_path):
     '''
     load, filter and format portfolio, profile and transcript data
-    
+
     INPUT
     data_path - path to folder containing portfolio, profile, and transcript files
-    
+
     OUTPUT
     PORTFOLIO - DataFrame of offers details
     PROFILE - DataFrame of customers demographics
     TRANSCRIPT - DataFrame of app interactions
     '''
-    
+
     # read in the json files
     portfolio = pd.read_json(data_path+'portfolio.json', orient='records', lines=True)
     profile = pd.read_json(data_path+'/profile.json', orient='records', lines=True)
@@ -57,10 +58,10 @@ def load_data(data_path):
 def expand_transcript(df):
     '''
     expand json formated data (in column called 'value') into pandas DataFrame
-    
+
     INPUT
     df - DataFrame containg transcript(app interactions)
-    
+
     OUTPUT
     n_trans - df['value'] expanded into ['offer_id', 'amount', 'reward']
 
@@ -79,10 +80,10 @@ def create_features(PROFILE):
     '''
     Creates bracketed features for 'age', 'became_member_on', and 'income'.
     Brackets are based on scatterplot visualizations (see devStarbucks.ipynb)
-    
+
     INPUT
     PROFILE - DataFrame containing customer profile demographics
-    
+
     OUTPUT
     feat_profile - bracketed demographics
     '''
@@ -103,13 +104,12 @@ def create_features(PROFILE):
     bins_date = PROFILE['became_member_on'].agg({'min': min, 'max': max}).to_list()
     bins_date.extend(pd.to_datetime(date_breaks).to_list())
     bins_date.sort()
-    
-    str_lab = [str(x.month)+'-'+str(x.year) for x in bins_date]
-    lab_date=[]
-    for i in range(len(str_lab)-1):
-        lab_date.append(str_lab[i]+ ' to ' +str_lab[i+1])
-#     lab_date = ['to '+str(x.date()) for x in bins_date[1:]]
 
+    str_lab = [str(x.month)+'-'+str(x.year) for x in bins_date]
+    lab_date = []
+    for i in range(len(str_lab)-1):
+        lab_date.append(str_lab[i] + ' to ' + str_lab[i+1])
+#     lab_date = ['to '+str(x.date()) for x in bins_date[1:]]
 
     feat_profile['membership'] = pd.cut(PROFILE.became_member_on, bins=bins_date, labels=lab_date)
     feat_profile['membership'] = feat_profile['membership'].astype('category')
@@ -146,7 +146,7 @@ def find_best_offer(res_table, age=None, member=None, income=None, gender=None):
     member_list = list(res_table['membership'].unique())
     income_list = list(res_table['income_brackets'].unique())
     gender_list = ['M', 'F', 'O']
-    
+
     # default query would return all res_table
     str_query = '(age_brackets != "118")'
 
@@ -164,7 +164,6 @@ def find_best_offer(res_table, age=None, member=None, income=None, gender=None):
         test_member = dict()
         for k in member_list:
             dates = re.findall('\d+', k)
-#             dt = datetime(year=int(date[0]), month=int(date[1]), day=int(date[2]))
             dt = datetime(year=int(dates[-1]), month=int(dates[-2]), day=1)
             test_member[k] = dt-datetime.fromisoformat(member)
         test_member = {k: v for k, v in test_member.items() if v >= timedelta(0)}
@@ -188,3 +187,15 @@ def find_best_offer(res_table, age=None, member=None, income=None, gender=None):
     return df_out
 
 
+def load_from_db():
+    '''
+    open database and load results and profile tables into DataFrames
+    '''
+    database_filename = './data/db_results.db'
+    engine = create_engine('sqlite:///'+database_filename)
+
+    RES = pd.read_sql_table('Variables', con=engine)
+    PROFILE = pd.read_sql_table('Profile', con=engine, index_col='id',
+                                parse_dates=['became_member_on'])
+
+    return RES, PROFILE

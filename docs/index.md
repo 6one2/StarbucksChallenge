@@ -5,7 +5,7 @@
 <br>
 <div style="width: 100%; overflow: hidden; position: relative;">
     <div style="width:30% ; float: left; text-align: center; position: absolute; top: 50%; transform: translateY(-50%);"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="100px" style="border-radius: 50%; border: 5px solid #bd5d38"></a></div>
-    <div style="margin-left:35%"><h1 style="font-weight:bold">Summary</h1><p>After careful examination of customers' profile, transaction transcript, and offer details, I was able to extract relevant brackets of demographics and present top 10 conversion rates</p>
+    <div style="margin-left:35%"><h1 style="font-weight:bold">Summary</h1><p>After careful examination and preparation of customers' profile, transaction transcript, and offer details, I was able to extract relevant brackets of demographics and present actionable top 10 conversion rates. The effort to present a more granular quantification of the customers performance in term of spending for each offer was tempered by the scarcity of the data and the relative small number of available features.</p>
     </div>
 </div>
 

@@ -4,8 +4,8 @@
 </div>
 <br>
 <div style="width: 100%; overflow: hidden; position: relative;">
-    <div style="width:25% ; float: left; text-align: center; position: absolute; top: 50%; transform: translateY(-50%);"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="200px" style="border-radius: 50%; border: 5px solid #bd5d38"></a></div>
-    <div style="margin-left:30%"><h1 style="font-weight:bold">Summary</h1><p>In this exercise on simulated data, I extracted relevant brackets of demographics and presented actionable conversion rates for each group of offer. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the scarcity of data and the relatively small number of available features.</p>
+    <div style="width:25% ; float: left; text-align: center; position: absolute; top: 50%; transform: translateY(-50%);"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="100%" style="border-radius: 50%; border: 5px solid #bd5d38"></a></div>
+    <div style="margin-left:30%; font-style: italic;"><h1 style="font-weight:bold;">Summary</h1><p>In this exercise on simulated data, I extracted relevant brackets of demographics and presented actionable conversion rates for each group of offer. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the scarcity of data and the relatively small number of available features.</p>
     </div>
 </div>
 
@@ -128,9 +128,9 @@ Table 3. Top 10 conversion rate ordered by maximum percentage points difference 
 
 # __A model of spending by offer type__
 
-In an attempt to provide quantifiable granular understanding of the spending habits of the customers and to predict the impact of each offer type on new customers, I tried to model the amount of dollar spent by offer type according to the limited number of features at my disposal (age, gender, date of registration, and income).
+In an attempt to provide a quantifiable, granular understanding of the spending habits of the customers and to predict the impact of each offer type on new customers, I tried to model the amount of dollar spent by offer type according to the limited number of features at my disposal (age, gender, date of registration, and income).
 
-After encoding the gender, and changing the date of registration into a time stamp in seconds, I added the individual total spending over 30 days as a features to test the relevance of a linear regression. Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yield rather poor relevance: in the best model considering the `discount` offers, only 62% of the variance of the test dataset was explained by our predicted values of spending.
+After encoding the gender, and changing the date of registration into a timestamp in seconds, I added the individual total spending over 30 days as a feature to test the relevance of linear regression. Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yielded rather poor predictions: in the best model considering the `discount` offers, only 62% of the variance of the test dataset was explained by our predicted values of spending.
 
 <div style="width: 100%; overflow: hidden; position: relative;">
     <div style="width:55% ; float: left; text-align: center;"><img src="./assets/truth_vs_preds.png" width="100%"></div>

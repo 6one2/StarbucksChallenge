@@ -14,6 +14,7 @@
 In the final project for my DataScience degree at [Udacity](https://www.udacity.com/course/data-scientist-nanodegree--nd025), I had access to a data set containing simulated data that mimics customer behavior on the Starbucks rewards mobile app. Over 30 days, Starbucks sends out 0 to 6 offers to users of the mobile app. An offer can be merely an advertisement for a drink (called `informational` offer) or an actual offer such as a `discount` or `bogo` (buy one get one free).
 
 Associated with the time-line of events for all participants, came the demographic profile of each individual with details on their `gender`, `age`, `income`, the date their profile was registered on the app (`become_member_on`).
+
 To drive customers to the stores, it is paramount to understand how each customer interacts with the app, and in particular how each customer reacts to a specific offer.
 
 I first focused my interest on how often the offers were viewed, and then on how this was leading to some kind of conversion into sales.
@@ -57,7 +58,7 @@ After filtering out customers with no demographic information (n = 2,175), the f
 - 100% of the customers viewed at least 50% of the presented offers.
 
 <div>
-<p style="text-align:center; font-family:courier; font-size:1vw">
+<p style="text-align:center; font-family:courier; font-size:2vw">
     "All customers viewed at least 50% of the offers presented to them. 88% of the customers viewed all the offers presented to them."
 </p>
 </div>
@@ -135,7 +136,7 @@ After encoding the gender, and changing the date of registration into a timestam
 <div style="width: 100%; overflow: hidden; position: relative;">
     <div style="width:55% ; float: left; text-align: center;"><img src="./assets/truth_vs_preds.png" width="100%"></div>
     <div style="margin-left:60%; text-align: center; margin: 0; position: absolute; top: 50%;  left: 55%; transform: translateY(-50%);">
-    <p style="text-align:center; font-family:courier; font-size:1vw">
+    <p style="text-align:center; font-family:courier; font-size:2vw">
         "only 62% of the variance of the test dataset was explained by our predicted values of spending"
     </p>
     </div>
@@ -144,7 +145,12 @@ After encoding the gender, and changing the date of registration into a timestam
 
 # __Final Thoughts:__
 
- - more guidance to create the relevant metric.
- - over 60% missing data in each sub-offers (Kmeans analysis not possible; how to use k-pod).
- - Not all users receive the same kind of offers, or the same number of offers.
- - simplified dataset
+
+The exploratory approach was rather effective to provide insights on the conversion rates of selected subgroups, but only for the `bogo` and `discount` offer types. The top-10 conversion rate tables are probably a good first step in the direction of improving the delivery of these offers.
+
+It is important to note that this approach was possible because of the very small amount of features available which enable a visual inspection of the relationships between customers and offers. It is also possible that the program simulated the data created strong patterns easily identifiable, which could explain the almost perfect distribution of missing data in each offer types, or the very salient breaks in the different demographics, as can be seen in income vs. age.
+
+The general task of finding _"which demographic group respond better to which offer"_ was rather broad. I am sure that discussing further the goals to be achieved with the relevant Starbucks team would have greatly improve the definition of relevant metrics, and would have lead to the construction of a better model of the data.
+
+
+_find the full analysis [there](devStarbucks.ipynb)_

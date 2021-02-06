@@ -104,7 +104,9 @@ The analysis is found in the main notebook [devStarbucks.ipynb](devStarbucks.ipy
 
 ## __Results Summary__
 
-The first exploratory approach was rather effective to provide insights on the conversion rates of selected subgroups but only for the `bogo` and `discount` offer types. The top-10 conversion rates tables are probably a good first step in the direction of improving the delivery of these offers.
+The exploratory approach was rather effective to provide insights on the conversion rates of selected subgroups but only for the `bogo` and `discount` offer types. The top-10 conversion rates tables are probably a good first step in the direction of improving the delivery of these offers (find example [here](devStarbucks.ipynb/#TOP-10-conversion-for-max-difference)).
+
+The attempt to present a more granular quantification of the customers' performance with a linear regression model was tempered by the scarcity of data and the relatively small number of available features. The best model was found for the `discount` offer type but was yielding only 62% r2 score and large mean absolute error.
 
 ## __Licensing, Authors, Acknowledgements__
 

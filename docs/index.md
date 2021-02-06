@@ -153,4 +153,4 @@ It is important to note that this approach was possible because of the very smal
 The general task of finding _"which demographic group respond better to which offer"_ was rather broad. I am sure that discussing further the goals to be achieved with the relevant Starbucks team would have greatly improve the definition of relevant metrics, and would have lead to the construction of a better model of the data.
 
 
-_find the full analysis [there](devStarbucks.ipynb)_
+_find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_

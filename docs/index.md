@@ -5,7 +5,7 @@
 <br>
 <div style="width: 100%; overflow: hidden; position: relative;">
     <div style="width:25% ; float: left; text-align: center; position: absolute; top: 50%; transform: translateY(-50%);"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="100%" style="border-radius: 50%; border: 5px solid #bd5d38"></a></div>
-    <div style="margin-left:30%; font-style: italic;"><h1 style="font-weight:bold;">Summary</h1><p>In this exercise on simulated data, I extracted relevant brackets of demographics and presented actionable conversion rates for each group of offer. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the scarcity of data and the relatively small number of available features.</p>
+    <div style="margin-left:30%; font-style: italic;"><h1 style="font-weight:bold;">Summary</h1><p>In this exercise on simulated data, I extracted relevant brackets of demographics and presented actionable conversion rates for each group of offer. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the sparsity of data and the relatively small number of available features.</p>
     </div>
 </div>
 
@@ -148,9 +148,9 @@ After encoding the gender, and changing the date of registration into a timestam
 
 The exploratory approach was rather effective to provide insights on the conversion rates of selected subgroups, but only for the `bogo` and `discount` offer types. The top-10 conversion rate tables are probably a good first step in the direction of improving the delivery of these offers.
 
-It is important to note that this approach was possible because of the very small amount of features available which enable a visual inspection of the relationships between customers and offers. It is also possible that the program simulated the data created strong patterns easily identifiable, which could explain the almost perfect distribution of missing data in each offer types, or the very salient breaks in the different demographics, as can be seen in income vs. age.
+It is important to note that this approach was possible because of the very small amount of features available which enable a visual inspection of the relationships between customers and offers. It is also possible that the program simulated the data created strong patterns easily identifiable, which could explain the almost perfect distribution of missing data in each offer type, or the very salient breaks in the different demographics, as can be seen in income vs. age.
 
-The general task of finding _"which demographic group respond better to which offer"_ was rather broad. I am sure that discussing further the goals to be achieved with the relevant Starbucks team would have greatly improve the definition of relevant metrics, and would have lead to the construction of a better model of the data.
+The general task of finding _" which demographic group responds better to which offer "_ was rather broad. I am sure that discussing further the goals to be achieved with the relevant Starbucks team would have greatly improved the definition of relevant metrics, and would have lead to the construction of a better model of the data.
 
 
 _find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_

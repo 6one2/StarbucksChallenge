@@ -24,11 +24,11 @@ As a simplification, there are no explicit products to track. Only the amounts o
 There are three types of offers that can be sent:
  1. __buy-one-get-one (BOGO)__: In a BOGO offer, a user needs to spend a certain amount to get a reward equal to that threshold amount
  2. __discount__: In a discount, a user gains a reward equal to a fraction of the amount spent.
- 3. __informational__: In an informational offer, there is no reward, but neither is there a requisite amount that the user is expected to spend.
+ 3. __informational__: In an informational offer, there is no reward, but neither is there a required amount that the user is expected to spend.
 
 Offers can be delivered via multiple channels. The basic task is to use the data to identify which groups of people are most responsive to each type of offer, and how best to present each type of offer.
 
-> __The task was to combine transaction, demographic and offer data to determine which demographic groups respond best to which offer type.__
+> __The task was to combine transaction, demographic, and offer data to determine which demographic groups respond best to which offer type.__
 
 I chose first an exploratory approach (see [conversion section](devStarbucks.ipynb/#Who-is-converting-which-offer?)). After data preparation and simplification due to a great number of missing values, I decided to visually explore the relationship between completion (for `bogo` and `discount` only) and the limited amount of customer demographics, namely:
 - gender
@@ -36,7 +36,7 @@ I chose first an exploratory approach (see [conversion section](devStarbucks.ipy
 - date of registration
 - income
 
-From these observations I extracted relevant brackets for each categories and compare conversion rate for each possible groups.
+From these observations, I extracted relevant brackets for each category and compare the conversion rate for each possible group.
 
 Finally, I tried to improve the analysis by adding a linear regression of the amount spent once an offer is viewed by the customer to gain a better understanding of the performance of each offer (section [Model](devStarbucks.ipynb/#Model)).
 
@@ -106,7 +106,7 @@ The analysis is found in the main notebook [devStarbucks.ipynb](devStarbucks.ipy
 
 The exploratory approach was rather effective to provide insights on the conversion rates of selected subgroups but only for the `bogo` and `discount` offer types. The top-10 conversion rates tables are probably a good first step in the direction of improving the delivery of these offers (find example [here](devStarbucks.ipynb/#TOP-10-conversion-for-max-difference)).
 
-The attempt to present a more granular quantification of the customers' performance with a linear regression model was tempered by the scarcity of data and the relatively small number of available features. The best model was found for the `discount` offer type but was yielding only 62% r2 score and large mean absolute error.
+The attempt to present a more granular quantification of the customers' performance with a linear regression model was tempered by the scarcity of data and the relatively small number of available features. The best model was found for the `discount` offer type but was yielding only a 62% r2 score and a large mean absolute error.
 
 ## __Licensing, Authors, Acknowledgements__
 

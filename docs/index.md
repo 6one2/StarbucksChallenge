@@ -57,7 +57,7 @@ After filtering out customers with no demographic information (n = 2,175), the f
 - 100% of the customers viewed at least 50% of the presented offers.
 
 <div>
-<p style="text-align:center; font-family:courier; font-size:150%">
+<p style="text-align:center; font-family:courier; font-size:1vw">
     "All customers viewed at least 50% of the offers presented to them. 88% of the customers viewed all the offers presented to them."
 </p>
 </div>
@@ -135,7 +135,7 @@ After encoding the gender, and changing the date of registration into a timestam
 <div style="width: 100%; overflow: hidden; position: relative;">
     <div style="width:55% ; float: left; text-align: center;"><img src="./assets/truth_vs_preds.png" width="100%"></div>
     <div style="margin-left:60%; text-align: center; margin: 0; position: absolute; top: 50%;  left: 55%; transform: translateY(-50%);">
-    <p style="text-align:center; font-family:courier; font-size:150%">
+    <p style="text-align:center; font-family:courier; font-size:1vw">
         "only 62% of the variance of the test dataset was explained by our predicted values of spending"
     </p>
     </div>

@@ -162,7 +162,7 @@ def run_model(X, y, norm_func=None):
         ax.set_ylabel('Prediction')
         ax.set_title(f'Transformation: {func_str}', weight='bold', fontsize=16)
         plt.show()
-        
+
         if False:
             ax.set_title("Discount Offer", weight='bold', fontsize=16)
             f.savefig('./docs/assets/truth_vs_preds.png', transparent=True, dpi=150)

@@ -1,36 +1,113 @@
 # __Starbucks Capstone Challenge__
+<div max-width="100%">
+<img src="./docs/assets/niels-kehl-6hpbjaAubDc-unsplash.jpg" width="100%">
+<br>
+<span>Photo by <a href="https://unsplash.com/@photographybyniels?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Niels Kehl</a> on <a href="https://unsplash.com/s/photos/starbucks?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+</div>
+<br>
 
-### Introduction
+_You can find a full commentary of this analysis [here](https://6one2.github.io/StarbucksChallenge/)._
 
-This data set contains simulated data that mimics customer behavior on the Starbucks rewards mobile app. Once every few days, Starbucks sends out an offer to users of the mobile app. An offer can be merely an advertisement for a drink or an actual offer such as a discount or BOGO (buy one get one free). Some users might not receive any offer during certain weeks.
+## __Installation__
+I used fairly standard libraries like `numpy`, `pandas`, `re`, `datetime`, `scipy`, `matplotlib`, `seaborn` for data wrangling and visualization.
+I used `sqlalchemy` to store the results table and modified customers' profile table.
+I used `sklearn` extensively in the model section.
 
-Not all users receive the same offer, and that is the challenge to solve with this data set.
+## __Project Overview & Motivation__
 
-Your task is to combine transaction, demographic and offer data to determine which demographic groups respond best to which offer type. This data set is a simplified version of the real Starbucks app because the underlying simulator only has one product whereas Starbucks actually sells dozens of products.
+During the Udacity Data Science Nanodegree program, I had access to data from Starbucks that simulates how people make purchasing decisions and how those decisions are influenced by promotional offers.
 
-Every offer has a validity period before the offer expires. As an example, a BOGO offer might be valid for only 5 days. You'll see in the data set that informational offers have a validity period even though these ads are merely providing information about a product; for example, if an informational offer has 7 days of validity, you can assume the customer is feeling the influence of the offer for 7 days after receiving the advertisement.
+Each person in the simulation has some hidden traits that influence their purchasing patterns and are associated with their observable traits. People produce various events, including receiving offers, opening offers, and making purchases.
 
-You'll be given transactional data showing user purchases made on the app including the timestamp of purchase and the amount of money spent on a purchase. This transactional data also has a record for each offer that a user receives as well as a record for when a user actually views the offer. There are also records for when a user completes an offer.
+As a simplification, there are no explicit products to track. Only the amounts of each transaction or offer are recorded.
 
-Keep in mind as well that someone using the app might make a purchase through the app without having received an offer or seen an offer.
+There are three types of offers that can be sent:
+ 1. __buy-one-get-one (BOGO)__: In a BOGO offer, a user needs to spend a certain amount to get a reward equal to that threshold amount
+ 2. __discount__: In a discount, a user gains a reward equal to a fraction of the amount spent.
+ 3. __informational__: In an informational offer, there is no reward, but neither is there a requisite amount that the user is expected to spend.
 
-### Example
+Offers can be delivered via multiple channels. The basic task is to use the data to identify which groups of people are most responsive to each type of offer, and how best to present each type of offer.
 
-To give an example, a user could receive a discount offer buy 10 dollars get 2 off on Monday. The offer is valid for 10 days from receipt. If the customer accumulates at least 10 dollars in purchases during the validity period, the customer completes the offer.
+> __The task was to combine transaction, demographic and offer data to determine which demographic groups respond best to which offer type.__
 
-However, there are a few things to watch out for in this data set. Customers do not opt into the offers that they receive; in other words, a user can receive an offer, never actually view the offer, and still complete the offer. For example, a user might receive the "buy 10 dollars get 2 dollars off offer", but the user never opens the offer during the 10 day validity period. The customer spends 15 dollars during those ten days. There will be an offer completion record in the data set; however, the customer was not influenced by the offer because the customer never viewed the offer.
+I chose first an exploratory approach (see [conversion section](devStarbucks.ipynb/#Who-is-converting-which-offer?)). After data preparation and simplification due to a great number of missing values, I decided to visually explore the relationship between completion (for `bogo` and `discount` only) and the limited amount of customer demographics, namely:
+- gender
+- age
+- date of registration
+- income
 
-### Cleaning
+From these observations I extracted relevant brackets for each categories and compare conversion rate for each possible groups.
 
-This makes data cleaning especially important and tricky.
+Finally, I tried to improve the analysis by adding a linear regression of the amount spent once an offer is viewed by the customer to gain a better understanding of the performance of each offer (section [Model](devStarbucks.ipynb/#Model)).
 
-You'll also want to take into account that some demographic groups will make purchases even if they don't receive an offer. From a business perspective, if a customer is going to make a 10 dollar purchase without an offer anyway, you wouldn't want to send a buy 10 dollars get 2 dollars off offer. You'll want to try to assess what a certain demographic group will buy when not receiving any offers.
+## __Project Structure__
 
-### Final Advice
+```
+.
+├── README.md
+├── code
+│   ├── __init__.py
+│   ├── __pycache__
+│   ├── data_modeling.py
+│   ├── data_visualization.py
+│   ├── data_wrangling.py
+│   └── starbucks_class.py
+├── data
+│   ├── db_results.db
+│   ├── portfolio.json
+│   ├── profile.json
+│   └── transcript.json
+├── devStarbucks.html
+├── devStarbucks.ipynb
+└── docs
+    ├── _config.yml
+    ├── assets
+    └── index.md
+```
 
-Because this is a capstone project, you are free to analyze the data any way you see fit. For example, you could build a machine learning model that predicts how much someone will spend based on demographics and offer type. Or you could build a model that predicts whether or not someone will respond to an offer. Or, you don't need to build a machine learning model at all. You could develop a set of heuristics that determine what offer you should send to each customer (i.e., 75 percent of women customers who were 35 years old responded to offer A vs 40 percent from the same demographic to offer B, so send offer A).
+The analysis is found in the main notebook [devStarbucks.ipynb](devStarbucks.ipynb). This notebook calls several custom modules found in `./code/`:
 
-## __References:__
+### Modules in `./code/`:
+- `data_modeling.py`: functions for building, running and evaluating the model
+- `data_visualization.py`: functions for creating the timeline visual representation.
+- `data_wrangling.py`: functions for loading, filtering and manipulating data
+- `starbucks_class.py`: two classes `Person` (keeping track of each customer) and `Event` (keeping track of each offer received) to help create the results table.
+
+### Data Dictionaries and database in `./data/`:
+`db_results.db`: This SQL database was not part of the original data, but was created to store the result table and modified customer profile. This database is created in section [Creating metrics for analysis](devStarbucks.ipynb/#Creating-metrics-for-analysis)
+
+`profile.json` : Rewards program users (17000 users x 5 fields)
+- gender: (categorical) M, F, O, or null
+- age: (numeric) missing value encoded as 118
+- id: (string/hash)
+- became_member_on: (date) format YYYYMMDD
+- income: (numeric)
+
+`portfolio.json`: Offers sent during 30-day test period (10 offers x 6 fields)
+- reward: (numeric) money awarded for the amount spent
+- channels: (list) web, email, mobile, social
+- difficulty: (numeric) money required to be spent to receive reward
+- duration: (numeric) time for offer to be open, in days
+- offer_type: (string) bogo, discount, informational
+- id: (string/hash)
+
+`transcript.json`: Event log (306648 events x 4 fields)
+- person: (string/hash)
+- event: (string) offer received, offer viewed, transaction, offer completed
+- value: (dictionary) different values depending on event type
+- offer id: (string/hash) not associated with any "transaction"
+- amount: (numeric) money spent in "transaction"
+- reward: (numeric) money gained from "offer completed"
+- time: (numeric) hours after start of test
+
+### GitHub page for full commentary in  `./docs/`:
+
+## __Results Summary__
+
+The first exploratory approach was rather effective to provide insights on the conversion rates of selected subgroups but only for the `bogo` and `discount` offer types. The top-10 conversion rates tables are probably a good first step in the direction of improving the delivery of these offers.
+
+## __Licensing, Authors, Acknowledgements__
+
 - [Udacity DataScience nanodegree](https://www.udacity.com/course/data-scientist-nanodegree--nd025)
 - [Regression Tutorial](https://towardsdatascience.com/machine-learning-with-python-regression-complete-tutorial)
 - [Linear Regression Interpretation](https://scikit-learn.org/dev/auto_examples/inspection/plot_linear_model_coefficient_interpretation.html#sphx-glr-auto-examples-inspection-plot-linear-model-coefficient-interpretation-py)

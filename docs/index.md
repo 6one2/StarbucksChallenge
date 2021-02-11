@@ -5,15 +5,207 @@
 <br>
 <div style="width: 100%; overflow: hidden; position: relative;">
     <div style="width:25% ; float: left; text-align: center; position: absolute; top: 50%; transform: translateY(-50%);"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="100%" style="border-radius: 50%; border: 5px solid #bd5d38"></a></div>
-    <div style="margin-left:30%; font-style: italic;"><h1 style="font-weight:bold;">Summary</h1><p>In this exercise on simulated data, I extracted relevant brackets of demographics and presented actionable conversion rates for each group of offer. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the sparsity of data and the relatively small number of available features.</p>
+    <div style="margin-left:30%; font-style: italic;"><h1 style="font-weight:bold;">Summary</h1><p>In this exercise on simulated data of Starbucks marketing offers, the task was to identify which offer customers like best. I extracted relevant brackets of demographics and presented actionable conversion rates for each offer type. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the sparsity of data and the relatively small number of available features.</p>
     </div>
 </div>
 
-# __Background__
+---
+# Project Definition
+## Project Overview
 
-In the final project for my DataScience degree at [Udacity](https://www.udacity.com/course/data-scientist-nanodegree--nd025), I had access to a data set containing simulated data that mimics customer behavior on the Starbucks rewards mobile app. Over 30 days, Starbucks sends out 0 to 6 offers to users of the mobile app. An offer can be merely an advertisement for a drink (called `informational` offer) or an actual offer such as a `discount` or `bogo` (buy one get one free).
+In the final project for my DataScience degree at [Udacity](https://www.udacity.com/course/data-scientist-nanodegree--nd025), I had access to a data set containing simulated data that mimics customer behavior on the Starbucks rewards mobile app. Such dataset are used to test different algorithms aiming to extract customers preferences (You can find a short description of the poject by a Data Scientist at Starbucks [here](https://youtu.be/bq-H7M5BU3U)).
+
+The task is rather broadly define as:
+> _... combine transaction, demographic, and offer data to determine which demographic groups respond best to which offer type_
+
+In this work, I will use this dataset as intended and present an exploratory analysis aimed at discriminating relevant group of customers and the way they interact with the different offers presented to them.
+
+
+## Problem Statement
+
+Over 30 days, Starbucks sends out 0 to 6 offers to users of the mobile app. An offer can be merely an advertisement for a drink (called `informational` offer) or an actual offer such as a `discount` or `bogo` (buy one get one free).
 
 Associated with the time-line of events for all participants, came the demographic profile of each individual with details on their `gender`, `age`, `income`, the date their profile was registered on the app (`become_member_on`).
+
+The goal of the following analysis is to establish subgroups of customers characterized by age, gender, date of registration, and income according to their preferential treatment of certain offers.
+
+
+## Metrics
+
+In the picture below (Figure 1) you'll find the time-line of events for one customer. You'll see 4 offers (3 `bogo` and 1 `discount`). All offers have specific durations (in this example: 7, 3, 7, and 5 days respectively). they also have a different level of difficulty or an amount that needs to be spent to be rewarded.
+
+To give an example, a user could receive a `discount` offer _buy 10 dollars get 2 off_. The offer is valid for 10 days from receipt. If the customer accumulates at least 10 dollars in purchases during the validity period, the customer completes the offer. In the case of `bogo` offer, the completion is achieve once the product is purchased. The completion is therefore clearly identified for these 2 offer types (marked with yellow lines in Figure 1). There are no completions identified for the `informational` offer.
+
+First, I considered how customers responded to the offers by simply looking at the number of time an offer received was viewed. Since each customer could receive the same offer more than once I computed a __viewing rate__ to identify if some subgroup were not interacting much with the mobile app.
+
+For simplification purpose but also due a large number of missing data in each sub-offers, I decided to aggregate the results by offer type
+
+Then, I focused on analyzing how customers were reacting once they viewed the offer. For that a marker of completion is necessary. The completion is straightforward for the `bogo` and `discount` offers, and I counted the number of completion only after an offer was viewed. For simplification purpose but also due a large number of missing data in each sub-offers, I decided to aggregate the results by offer type (`bogo` and `discount` only). I then computed an __completion rate__ per offer type.
+
+In an exploratory approach, decided to visually explore the relationship between completion (for `bogo` and `discount` only) and the limited amount of customer demographics, namely, gender, age, date of registration, and income. From these observations, I extracted relevant brackets for each category and compare the conversion rate for each possible group.
+
+Finally, I tried to improve the analysis by adding a linear regression of the __amount spent__ during the remaining duration of an offer after the offer is viewed by the customer. Such model should give us a better understanding of the performance of each offer. Since this approach does not rely on completion I was able to extend the analysis to all offer types: `bogo`, `discount`, and `informational`.
+
+
+# Analysis
+## Data Exploration & Visualization
+
+### The `profile.json` dataset
+Rewards program users (17000 users x 5 fields)
+- gender: (categorical) M, F, O, or null
+- age: (numeric) missing value encoded as 118
+- id: (string/hash)
+- became_member_on: (date) format YYYYMMDD
+- income: (numeric)
+
+The `profile.json` dataset presented 17,000 customers but required the removal of customers with missing details that were clearly identified with the an age of 118. After filtering only 14,825 unique customers were available for the rest of the analysis. This dataset also required a conversion of `became_member_on` into a date format which was easily achieve once loaded as a pandas DataFrame. The modified dataset was stored in a DataFrame named `PROFILE`.
+
+### The `portfolio.json` dataset
+Offers sent during 30-day test period (10 offers x 6 fields)
+- reward: (numeric) money awarded for the amount spent
+- channels: (list) web, email, mobile, social
+- difficulty: (numeric) money required to be spent to receive reward
+- duration: (numeric) time for offer to be open, in days
+- offer_type: (string) bogo, discount, informational
+- id: (string/hash)
+
+The `portfolio.json` dataset provided details about each specific offer that could presented to the customers. The variable `channel` presented the channel via which the customers would received an offer (web, email, mobile, or social). I expanded this column into 4 columns for each channel type, marking the channel as active with `1` and inactive as `0`. Since all offers were presented via email, this column was removed. Finally, since the `offer_id` was not easily identifiable, I created a code for each offer to have better readability of `offer_type`, `duration`, and `difficulty`. For instance, the offer `f19421c1d4aa40978ebb69ca19b0e20d`, a `bogo` offer which required to spent \$5, and lasted for 5 days, became; `B.05.05`. The modified dataset was stored in a DataFrame named `PORTFOLIO`.
+
+### The `transcript.json` dataset
+Event log (306648 events x 4 fields)
+- person: (string/hash)
+- event: (string) offer received, offer viewed, transaction, offer completed
+- value: (dictionary) different values depending on event type
+- offer id: (string/hash) not associated with any "transaction"
+- amount: (numeric) money spent in "transaction"
+- reward: (numeric) money gained from "offer completed"
+- time: (numeric) hours after start of test
+
+After inspection of only the 14,825 customers remaining, I identified from the `transcript.json` dataset 5 customers that did not received any offer. I also identified 333 customers that did not make any transactions over the course of the 30 days of observations. I decided to remove these individuals from the rest of the analysis and keep only 14,487 customers.
+
+### Creating targets and features
+By iterating through the customer of this event log I gathered the total amount of money spent over 30 days as `total_spending`, and the total amount of offers received as `total_offers` for each individual. These 2 variables were added to `PROFILE` to be used as features later.
+
+By iterating through all the offers received by customer, I gathered the amount of money spent after being viewed as `amount_viewed`, the view status as `view_tag` (0: not viewed, 1: viewed), and the completion status as `completed_tag` (0: not completed, 1:completed). I stored these variables along with the `offer_id`, and the `profile_id` in the DataFrame named `RES`.
+
+#### _Time-line_
+For the generation this main metric table `RES`, I created a visualization of the time-line of event (Figure 1) to better understand how to assign the transactions to specific offers. This visualization was also useful to test and verified the implementation of the analysis.
+
+<div max-width="100%">
+<img src="./assets/Timeline.png" width="100%">
+<p style="text-align:center; font-style:italic; font-size:small">
+Figure 1. Timeline of events for one customer. Red lines represent the reception of an offer. Blue lines represent the moment the offer was viewed. Yellow lines show when an offer was completed. Black lines (solid and dashed) represent the occurrence of a transaction.
+</p>
+</div>
+<br>
+
+#### _Offer distribution_
+The Figure 2 shows that all offer were evenly presented (~10% each) through of the dataset. This means that by considering only <code>bogo</code> and `discount` offers in a first analysis, 80% of the offer received (40% for `bogo` and 40% for `discount`) were accounted for.
+
+ <div max-width="100%">
+ <img src="./assets/offer_dist_pie.png" width="100%">
+ <p style="text-align:center; font-style:italic; font-size:small;">
+ Figure 2. Distribution of each offer. The transcript of event was evenly split with each offer represented 10% of all offer received.</p>
+ </div>
+ <br>
+
+#### _Missing Values per Offer_
+Since just few offers are presented to the customers, it was clear that the metric table would concentrate a lot of missing values. When I look closely at the missing values rate for each offer (Table 1) I found that about 63% of the offer received presented missing values in any offer. By aggregating offers by offer type the rate of missing values decreases drastically. This is another argument to consider only `bogo`, `discount`, and `informational` in the analysis.
+
+<div style="text-align:center">
+<img src="./assets/missing_rate_table_all.png" width="20%">
+<img src="./assets/missing_rate_table_type.png" width="20%">
+<p style="text-align:center; font-style:italic; font-size:small; padding:1em">
+Table 1. Missing values rates for all offers (left) and aggregated offer types (right)
+</p>
+</div>
+
+#### _Offer Completion_
+I considered a conversion when an offer was completed only after being viewed. The median conversion rate for the `bogo` offers was only 33.3%  but 50.0% for `discount`. I chose to label customers as successful at converting the offer if they showed a 50% or higher conversion rate.
+
+<div>
+<img src="assets/completion_rate.png">
+<p style="text-align:center; font-style:italic; font-size:small; padding:1em">
+Figure 3. Completion rates distribution for <code>bogo</code> (left) and <code>discount</code> (right).
+</p>
+</div>
+
+I decided to explore visually the distribution of the conversions over the different demographics looking at income vs. age (Figure 4), age vs. registration date (Figure 5, left), and income vs. registration date (Figure 5, right).
+
+<div max-width="100%">
+<img src="./assets/AgeIncome.png" width="100%">
+<p style="text-align:center; font-style:italic">
+Figure 4. Customers age vs. income. The orange dots represent the customers that completed the <code>bogo</code> offers and blue dots represent customers that did not complete the offers. The size of the dots represents the gender of the customers.
+</p>
+</div>
+
+<div style= "max-width: 100%; overflow: hidden;">
+    <div style="width:50% ; float: left; text-align: right"><img src="./assets/AgeMember.png" width="100%"></div>
+    <div style="margin-left:50%; text-align: center"><img src="./assets/MemberIncome.png" width="100%"></div>
+<!-- <img src="./assets/AgeIncome.png" width="100%"> -->
+<p style="text-align:center; font-style:italic">
+Figure 5. Registration date vs. Age (left panel) and Registration date vs. Income (right panel) for the <code>bogo</code> offers.
+</p>
+</div>
+
+Figure 4, and Figure 5 represent only the `bogo` offers, but similar patterns can be seen for the `discount` offers. These scatter plots show rather clear "brackets" in the different categories:
+ - __age breaks__ can be seen at 36 (first income break), 48 (second income break), and 75 years of age (thinning of the population).
+ - __income breaks__ can be seen at 50k (increase in the number of conversions), 75k, and 100k
+ - __registration breaks__ be seen August 1<sup>st</sup> 2015, and August 1<sup>st</sup> 2017. Both dates show large increases in registration.
+
+I used these brackets to break down the profile into a limited amount of categories that enabled me to extract conversion rate per relevant subgroups.
+
+> Features and calculated statistics relevant to the problem have been reported and discussed related to the dataset, and a thorough description of the input space or input data has been made. Abnormalities or characteristics about the data or input that need to be addressed have been identified.
+
+
+
+
+
+# Methodology
+## Data Preprocessing
+> All preprocessing steps have been clearly documented. Abnormalities or characteristics about the data or input that needed to be addressed have been corrected. If no data preprocessing is necessary, it has been clearly justified.
+
+## Implementation
+> The process for which metrics, algorithms, and techniques were implemented with the given datasets or input data has been thoroughly documented. Complications that occurred during the coding process are discussed.
+
+## Refinement
+> The process of improving upon the algorithms and techniques used is clearly documented. Both the initial and final solutions are reported, along with intermediate solutions, if necessary.
+
+
+# Results
+## Model Evaluation and Validation
+
+<div style="text-align:center">
+<img src="assets/view_rate_table.png">
+<img src="assets/viewing_rate.png" style="width:50%; padding:1em">
+<p style="text-align:center; font-style:italic; font-size:small; padding:1em">Table 2. Viewing rate per offer</p>
+</div>
+
+
+
+> If a model is used, the following should hold: The final model’s qualities — such as parameters — are evaluated in detail. Some type of analysis is used to validate the robustness of the model’s solution.
+
+> Alternatively a student may choose to answer questions with data visualizations or other means that don't involve machine learning if a different approach best helps them address their question(s) of interest.
+
+## Justification
+>The final results are discussed in detail.
+Exploration as to why some techniques worked better than others, or how improvements were made are documented.
+
+
+# Conclusion
+## Reflection
+>Student adequately summarizes the end-to-end problem solution and discusses one or two particular aspects of the project they found interesting or difficult.
+
+## Improvement
+>Discussion is made as to how at least one aspect of the implementation could be improved. Potential solutions resulting from these improvements are considered and compared/contrasted to the current solution.
+
+<br>
+
+---
+---
+# __Background__
+
+
 
 To drive customers to the stores, it is paramount to understand how each customer interacts with the app, and in particular how each customer reacts to a specific offer.
 
@@ -24,28 +216,12 @@ My approach was first, exploratory, and therefore I tried to visualize clusters 
 
 # __What customer interactions look like?__
 
-In the picture below (figure 1) you'll find the time-line of events for one customer. You'll see 4 offers (3 `bogo` and 1 `discount`). All offers have specific durations (in this example: 7, 3, 7, and 5 days respectively). they also have a different level of difficulty or an amount that needs to be spent to be rewarded.
 
-To give an example, a user could receive a discount offer _buy 10 dollars get 2 off_. The offer is valid for 10 days from receipt. If the customer accumulates at least 10 dollars in purchases during the validity period, the customer completes the offer.
 
-<div max-width="100%">
-<img src="./assets/Timeline.png" width="100%">
-<p style="text-align:center; font-style:italic">
-Figure 1. Timeline of events for one customer. Red lines represent the reception of an offer. Blue lines represent the moment the offer was viewed. Yellow lines show when an offer was completed. Black lines (solid and dashed) represent the occurrence of a transaction.
-</p>
-</div>
 
-However, there are a few things to watch out for in both this data set and our analysis:
-
-- Customers do not opt into the offers that they receive; in other words, a user can receive an offer, never actually view the offer, and still complete the offer. For example, a user might receive the "buy 10 dollars get 2 dollars off offer", but the user never opens the offer during the 10 day validity period. The customer spends 15 dollars during those ten days. There will be an offer completion record in the data set; however, the customer was not influenced by the offer because the customer never viewed the offer. This will require filtering out the completions that occurred before an offer is viewed.
-
-- The data set differentiates 10 offers (4 `bogo`, 4 `discount`, and 2 `informational`). The specificity of each offer is found in its _difficulty_ (amount of dollars needed to complete the offer), and its _duration_ (number of days of activity). Since the goal of this analysis was to find which offer was preferred by which customer and not to address the effect of difficulty and duration per se, we decided to group them and simplify our analysis by looking at the overall response to `bogo`, `discount`, and `informational` offers.
 
 - Distribution of offers type:
-<div style="width: 100%; overflow: hidden;">
-    <div style="width:40% ; float: left; text-align: right"> <img src="./assets/offer_dist.png" width="200px"></div>
-    <div style="margin-left:45%"> Considering that there are find 4 sub-offers in <code>bogo</code>, 4 sub-offers in <code>discount</code> but only 2 sub-offers in <code>informational</code>, it is clear that all offers sub-types were equally present (~10% each).</div>
-</div>
+
 
 - The completion is straightforward for the `bogo` and `discount` offers, and I will use this indicator to measure success in these cases. However, the measurement of success for the `informational` offers requires much more discussion as many metrics of success can be implemented.
 
@@ -70,30 +246,7 @@ With an average viewing rate of 97% across all offers, and all customers interac
 
 As mentioned earlier the conversion for both the `bogo` and the `discount` offers was very clear: _offer marked as completed in the `transcript` data set_. For this reason and the fact that the presentation rate of these 2 offers was similar, I chose to focus on the comparison of these 2 offers only in the rest of this section.
 
-I considered a conversion when an offer was completed only after the offer was viewed. The overall conversion rate was 41.5% for the `bogo` offers and 46.1% for the `discount` offers. I then labeled customers as successful at converting the offer if they showed a 50% or higher conversion rate.
 
-I decided to explore visually the distribution of the conversions over the different demographics looking at income vs. age (Figure 2), age vs. registration date (Figure 3, left), and income vs. registration date (Figure 3, right).
-
-<div max-width="100%">
-<img src="./assets/AgeIncome.png" width="100%">
-<p style="text-align:center; font-style:italic">
-Figure 2. Customers age vs. income. The orange dots represent the customers that completed the <code>bogo</code> offers and blue dots represent customers that did not complete the offers. The size of the dots represents the gender of the customers.
-</p>
-</div>
-
-<div style= "max-width: 100%; overflow: hidden;">
-    <div style="width:50% ; float: left; text-align: right"><img src="./assets/AgeMember.png" width="100%"></div>
-    <div style="margin-left:50%; text-align: center"><img src="./assets/MemberIncome.png" width="100%"></div>
-<!-- <img src="./assets/AgeIncome.png" width="100%"> -->
-<p style="text-align:center; font-style:italic">
-Figure 3. Registration date vs. Age (left panel) and Registration date vs. Income (right panel) for the <code>bogo</code> offers.
-</p>
-</div>
-
-Figure 2, and Figure 3 represent only the `bogo` offers, but similar patterns can be seen for the `discount` offers. These scatter plots show rather clear "brackets" in the different categories:
- - __age breaks__ can be seen at 36 (first income break), 48 (second income break), and 75 years of age (thinning of the population).
- - __income breaks__ can be seen at 50k (increase in the number of conversions), 75k, and 100k
- - __registration breaks__ be seen August 1<sup>st</sup> 2015, and August 1<sup>st</sup> 2017. Both dates show large increases in registration.
 
 I then segregated the customers' demographics into these brackets and computed the conversion rate for each group. I also computed the cumulative total spending for each category, to assess the importance of each sub-group in the analysis. Throughout the 144 sub-groups, the maximum `total_spending` was \$ 151,850.52 with a median `total_spending` of \$ 1,938.09.
 

@@ -60,6 +60,7 @@ Rewards program users (17000 users x 5 fields)
 
 The `profile.json` dataset presented 17,000 customers but required the removal of customers with missing details that were clearly identified with the an age of 118. After filtering only 14,825 unique customers were available for the rest of the analysis. This dataset also required a conversion of `became_member_on` into a date format which was easily achieve once loaded as a pandas DataFrame. The modified dataset was stored in a DataFrame named `PROFILE`.
 
+
 ### The `portfolio.json` dataset
 Offers sent during 30-day test period (10 offers x 6 fields)
 - reward: (numeric) money awarded for the amount spent
@@ -70,6 +71,7 @@ Offers sent during 30-day test period (10 offers x 6 fields)
 - id: (string/hash)
 
 The `portfolio.json` dataset provided details about each specific offer that could presented to the customers. The variable `channel` presented the channel via which the customers would received an offer (web, email, mobile, or social). I expanded this column into 4 columns for each channel type, marking the channel as active with `1` and inactive as `0`. Since all offers were presented via email, this column was removed. Finally, since the `offer_id` was not easily identifiable, I created a code for each offer to have better readability of `offer_type`, `duration`, and `difficulty`. For instance, the offer `f19421c1d4aa40978ebb69ca19b0e20d`, a `bogo` offer which required to spent \$5, and lasted for 5 days, became; `B.05.05`. The modified dataset was stored in a DataFrame named `PORTFOLIO`.
+
 
 ### The `transcript.json` dataset
 Event log (306648 events x 4 fields)
@@ -83,10 +85,12 @@ Event log (306648 events x 4 fields)
 
 After inspection of only the 14,825 customers remaining, I identified from the `transcript.json` dataset 5 customers that did not received any offer. I also identified 333 customers that did not make any transactions over the course of the 30 days of observations. I decided to remove these individuals from the rest of the analysis and keep only 14,487 customers.
 
+
 ### Creating targets and features
 By iterating through the customer of this event log I gathered the total amount of money spent over 30 days as `total_spending`, and the total amount of offers received as `total_offers` for each individual. These 2 variables were added to `PROFILE` to be used as features later.
 
 By iterating through all the offers received by customer, I gathered the amount of money spent after being viewed as `amount_viewed`, the view status as `view_tag` (0: not viewed, 1: viewed), and the completion status as `completed_tag` (0: not completed, 1:completed). I stored these variables along with the `offer_id`, and the `profile_id` in the DataFrame named `RES`.
+
 
 #### _Time-line_
 For the generation this main metric table `RES`, I created a visualization of the time-line of event (Figure 1) to better understand how to assign the transactions to specific offers. This visualization was also useful to test and verified the implementation of the analysis.
@@ -99,15 +103,17 @@ Figure 1. Timeline of events for one customer. Red lines represent the reception
 </div>
 <br>
 
+
 #### _Offer distribution_
 The Figure 2 shows that all offer were evenly presented (~10% each) through of the dataset. This means that by considering only <code>bogo</code> and `discount` offers in a first analysis, 80% of the offer received (40% for `bogo` and 40% for `discount`) were accounted for.
 
- <div max-width="100%">
- <img src="./assets/offer_dist_pie.png" width="100%">
+ <div max-width="100%" style="text-align:center;">
+ <img src="./assets/offer_dist_pie.png" width="60%">
  <p style="text-align:center; font-style:italic; font-size:small;">
  Figure 2. Distribution of each offer. The transcript of event was evenly split with each offer represented 10% of all offer received.</p>
  </div>
  <br>
+
 
 #### _Missing Values per Offer_
 Since just few offers are presented to the customers, it was clear that the metric table would concentrate a lot of missing values. When I look closely at the missing values rate for each offer (Table 1) I found that about 63% of the offer received presented missing values in any offer. By aggregating offers by offer type the rate of missing values decreases drastically. This is another argument to consider only `bogo`, `discount`, and `informational` in the analysis.
@@ -119,6 +125,7 @@ Since just few offers are presented to the customers, it was clear that the metr
 Table 1. Missing values rates for all offers (left) and aggregated offer types (right)
 </p>
 </div>
+
 
 #### _Offer Completion_
 I considered a conversion when an offer was completed only after being viewed. The median conversion rate for the `bogo` offers was only 33.3%  but 50.0% for `discount`. I chose to label customers as successful at converting the offer if they showed a 50% or higher conversion rate.
@@ -132,21 +139,24 @@ Figure 3. Completion rates distribution for <code>bogo</code> (left) and <code>d
 
 I decided to explore visually the distribution of the conversions over the different demographics looking at income vs. age (Figure 4), age vs. registration date (Figure 5, left), and income vs. registration date (Figure 5, right).
 
-<div max-width="100%">
-<img src="./assets/AgeIncome.png" width="100%">
-<p style="text-align:center; font-style:italic">
+<div max-width="100%" style="text-align:center">
+<img src="./assets/AgeIncome.png" width="75%">
+<p class="cap">
 Figure 4. Customers age vs. income. The orange dots represent the customers that completed the <code>bogo</code> offers and blue dots represent customers that did not complete the offers. The size of the dots represents the gender of the customers.
 </p>
 </div>
 
-<div style= "max-width: 100%; overflow: hidden;">
-    <div style="width:50% ; float: left; text-align: right"><img src="./assets/AgeMember.png" width="100%"></div>
-    <div style="margin-left:50%; text-align: center"><img src="./assets/MemberIncome.png" width="100%"></div>
-<!-- <img src="./assets/AgeIncome.png" width="100%"> -->
-<p style="text-align:center; font-style:italic">
+<div class="flex-container">
+    <div class="flex-item">
+        <img src="./assets/AgeMember.png" width="100%">
+    </div>
+    <div class="flex-item">
+        <img src="./assets/MemberIncome.png" width="100%">
+    </div>
+</div>
+<p class="cap">
 Figure 5. Registration date vs. Age (left panel) and Registration date vs. Income (right panel) for the <code>bogo</code> offers.
 </p>
-</div>
 
 Figure 4, and Figure 5 represent only the `bogo` offers, but similar patterns can be seen for the `discount` offers. These scatter plots show rather clear "brackets" in the different categories:
  - __age breaks__ can be seen at 36 (first income break), 48 (second income break), and 75 years of age (thinning of the population).
@@ -155,7 +165,49 @@ Figure 4, and Figure 5 represent only the `bogo` offers, but similar patterns ca
 
 I used these brackets to break down the profile into a limited amount of categories that enabled me to extract conversion rate per relevant subgroups.
 
-> Features and calculated statistics relevant to the problem have been reported and discussed related to the dataset, and a thorough description of the input space or input data has been made. Abnormalities or characteristics about the data or input that need to be addressed have been identified.
+
+#### _Amount spent per offer_
+
+In an alternative approach, I tried to use the amount spent per offer once viewed as the target variable for regression based on the available demographics features. In that regard, I explored the distribution of the total spending over 30 days (Figure 6) to filter out outlier behaviors. I decided first to remove all customers that did not spent more than $5 over 30 days. Looking at the distribution of total spending, I also filter out _high spender outliers_ by using the traditional definition of outliers as:
+
+<div style="text-align:center">
+    <img src="assets/Equation.png" width="30%"> ,
+</div>
+<br>
+where Q<sub>3</sub> represents the third quartile (75% of the population) and IQR represent the Interquartile Range, Q<sub>3</sub> - Q<sub>1</sub> (Q<sub>1</sub>: 25% of the population). In the case of the total spending for this upper limit is $355.63.
+
+<div class="flex-container">
+    <div class="flex-item">
+        <img src="./assets/amount_spent_before.png">
+    </div>
+    <div class="flex-item">
+        <img src="./assets/amount_spent_after.png">
+    </div>
+</div>
+<p class="cap">
+Figure 6. Distribution of the total spending over 30 days before (top panel) and after filtering (bottom panel).
+</p>
+
+<div class="flex-container">
+    <div class="flex-item">
+        <img src="assets/amount_spent_ttest.png">
+        <p style="text-align:center; font-style:italic; font-size:small">Figure 7. Distribution of the amount per viewed offer inn regards to the completion status for <code>bogo</code> and <code>discount</code></p>
+    </div>
+    <div class="flex-item">
+    <p><h5>Metric validation</h5>After filtering I wanted to test if the amount spent would be a able to reflect the offer completion as defined above. I applied a t-test to compare the amount spent per offer viewed for customers considered successful at completing offers and customers that are not.</p>
+    <p>In both <code>bogo</code> and <code>discount</code> the probability of the groups to be similar was largely below 5%. We can then consider that the groups are significantly different for one another in the amount they spent per viewed offer.</p>
+    </div>
+</div>
+
+
+The distribution of the amount spent per offer viewed appears to be be skewed, which can impact negatively the regression model (Figure 8). I tested a square root and log10 transformation and tested their impact on the model.
+
+<div>
+    <img src="assets/amount_spent_transformed.png">
+    <p class="cap">Figure 8. Distribution of amount spent per offer viewed (left panel) with <code>sqrt</code> (middle panel), and <code>log10</code> (right panel) transformations.</p>
+</div>
+
+<!-- > Features and calculated statistics relevant to the problem have been reported and discussed related to the dataset, and a thorough description of the input space or input data has been made. Abnormalities or characteristics about the data or input that need to be addressed have been identified. -->
 
 
 
@@ -163,9 +215,12 @@ I used these brackets to break down the profile into a limited amount of categor
 
 # Methodology
 ## Data Preprocessing
+
 > All preprocessing steps have been clearly documented. Abnormalities or characteristics about the data or input that needed to be addressed have been corrected. If no data preprocessing is necessary, it has been clearly justified.
 
 ## Implementation
+
+
 > The process for which metrics, algorithms, and techniques were implemented with the given datasets or input data has been thoroughly documented. Complications that occurred during the coding process are discussed.
 
 ## Refinement
@@ -201,7 +256,7 @@ Exploration as to why some techniques worked better than others, or how improvem
 
 <br>
 
----
+<!-- ---
 ---
 # __Background__
 
@@ -303,7 +358,36 @@ The exploratory approach was rather effective to provide insights on the convers
 
 It is important to note that this approach was possible because of the very small amount of features available which enable a visual inspection of the relationships between customers and offers. It is also possible that the program simulated the data created strong patterns easily identifiable, which could explain the almost perfect distribution of missing data in each offer type, or the very salient breaks in the different demographics, as can be seen in income vs. age.
 
-The general task of finding _" which demographic group responds better to which offer "_ was rather broad. I am sure that discussing further the goals to be achieved with the relevant Starbucks team would have greatly improved the definition of relevant metrics, and would have lead to the construction of a better model of the data.
+The general task of finding _" which demographic group responds better to which offer "_ was rather broad. I am sure that discussing further the goals to be achieved with the relevant Starbucks team would have greatly improved the definition of relevant metrics, and would have lead to the construction of a better model of the data. -->
 
 
 _find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_
+
+<!-- css style -->
+<style>
+.cap{
+    text-align: center;
+    font-size: small;
+    font-style:italic
+}
+
+.flex-container {
+    align-content: center;
+    justify-content: center;
+    display: flex;
+    flex-direction: row;
+}
+
+.flex-item {
+    margin: 10px;
+    flex: 50%;
+}
+
+<!-- /* Responsive layout - makes a one column layout instead of a two-column layout */ -->
+@media (max-width: 800px) {
+  .flex-container {
+    flex-direction: column;
+  }
+}
+
+</style>

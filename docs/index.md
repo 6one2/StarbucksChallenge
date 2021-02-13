@@ -3,9 +3,9 @@
 <span>Photo by <a href="https://unsplash.com/@photographybyniels?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Niels Kehl</a> on <a href="https://unsplash.com/s/photos/starbucks?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
 </div>
 <br>
-<div style="width: 100%; overflow: hidden; position: relative;">
-    <div style="width:25% ; float: left; text-align: center; position: absolute; top: 50%; transform: translateY(-50%);"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="100%" style="border-radius: 50%; border: 5px solid #bd5d38"></a></div>
-    <div style="margin-left:30%; font-style: italic;"><h1 style="font-weight:bold;">Summary</h1><p>In this exercise on simulated data of Starbucks marketing offers, the task was to identify which offer customers like best. I extracted relevant brackets of demographics and presented actionable conversion rates for each offer type. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the sparsity of data and the relatively small number of available features.</p>
+<div class="flex-container">
+    <div class="flex-item"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="200px" style="border-radius: 50%; border: 5px solid Teal"></a></div>
+    <div class="flex-item"><h1 style="font-weight:bold;">Summary</h1><p>In this exercise on simulated data of Starbucks marketing offers, the task was to identify which offer customers like best. I extracted relevant brackets of demographics and presented actionable conversion rates for each offer type. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the sparsity of data and the relatively small number of available features.</p>
     </div>
 </div>
 
@@ -217,28 +217,40 @@ The distribution of the amount spent per offer viewed appears to be be skewed, w
 
 
 
-
-
 # Methodology
 ## Data Preprocessing
 The filtering and formatting steps taken for the exploration of data were explained in the previous section.
 
 Regarding the regression model few steps were implemented:
-1. Encoding of the `gender` in integers (with sklearn's `OneHotEncoder()`).
-2. Converting the date into a timestamp. That steps allowed to use the registration date as a continuous variable better suited for a linear regression.
+1. Converting the date into a Unix timestamp (in seconds). This allowed to use the registration date as a continuous variable better suited for a linear regression.
+2. Encoding of the `gender` in integers (with sklearn's `OneHotEncoder()`).
 3. All features were scaled according to their median and IQR to decrease the effect of outlier values (with sklearn's `RobustScaler()`)  
 
-
+The step #1 was implemented in `data_modeling.filter_by_offer()`. Steps #2 and #3 were implemented in `data_modeling.build_model()` and integrated into the pipeline that fed a grid search to estimate the best performance and the best model paramaters.
 
 > All preprocessing steps have been clearly documented. Abnormalities or characteristics about the data or input that needed to be addressed have been corrected. If no data preprocessing is necessary, it has been clearly justified.
 
 ## Implementation
-The analysis was contained in a jupyter notebook calling few modules describe below.
+The analysis was contained in a jupyter notebook calling few modules located in the `./code/` directory and describe below.
 
 ### `data_wrangling.py`:
-This module contains general methods use for data manipulation:
-- `load_data()`: loads, filters and format the portfolio, profile, and transcript datasets.
-- `expand_transcript`: specifically expand the dictionary contained in transcript containing `offer_id`, `transaction`, `amount`.
+This module contains general functions use for data manipulation:
+- `load_data()`: loads, filters and formats the portfolio, profile, and transcript datasets.
+- `expand_transcript()`: expands the dictionary contained in transcript containing _offer_id_, _amount_, and _reward_.
+- `create_features()`: creates the classes for each category of the profile dataset according to the brackets identified in Figures 4 and 5.
+- `load_from_db()`: loads the metric table and the filtered and updated profile dataset from tables in the `db_results.db` SQL database located in the `./data/` directory. This was implemented to avoid running the analysis on the full transcript during development.
+
+### `data_visualization.py`:
+This module contained only `time_line()` function to generate time-line visualization such as Figure 1.
+
+### `starbucks_class.py`:
+This module contains the 2 classes necessary to run the analysis.
+- `Person()`: Object representing a customer characterized by its _id_, the _data_ associated to this customer, the _offers_ that it received, and the sum of all transactions or _total spending_. 2 methods are associated to this object:
+    - `get_transaction()`: pandas dataframe of all transactions between 2 hours of the records.
+    - `get_reward()`: pandas dataframe of all rewards between 2 hours of the records.
+- `Event()`: Object representing a received offer characterized by all details of the offer (see repository for details), and specifically the time of reception (_viewed_) and the time of completion (_completed_) that were crucial in the establishment of the viewing status, completion status, and the extraction of the amount spent by offer viewed.
+
+### `data_modeling.py`:
 
 > The process for which metrics, algorithms, and techniques were implemented with the given datasets or input data has been thoroughly documented. Complications that occurred during the coding process are discussed.
 

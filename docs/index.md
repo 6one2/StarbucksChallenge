@@ -140,7 +140,7 @@ Figure 3. Completion rates distribution for <code>bogo</code> (left) and <code>d
 I decided to explore visually the distribution of the conversions over the different demographics looking at income vs. age (Figure 4), age vs. registration date (Figure 5, left), and income vs. registration date (Figure 5, right).
 
 <div max-width="100%" style="text-align:center">
-<img src="./assets/AgeIncome.png" width="75%">
+<img src="./assets/AgeIncome.png" width="100%">
 <p class="cap">
 Figure 4. Customers age vs. income. The orange dots represent the customers that completed the <code>bogo</code> offers and blue dots represent customers that did not complete the offers. The size of the dots represents the gender of the customers.
 </p>
@@ -390,4 +390,7 @@ _find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_
   }
 }
 
+.img {
+    width:100%
+}
 </style>

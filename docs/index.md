@@ -118,6 +118,8 @@ The Figure 2 shows that all offer were evenly presented (~10% each) through of t
 #### _Missing Values per Offer_
 Since just few offers are presented to the customers, it was clear that the metric table would concentrate a lot of missing values. When I look closely at the missing values rate for each offer (Table 1) I found that about 63% of the offer received presented missing values in any offer. By aggregating offers by offer type the rate of missing values decreases drastically. This is another argument to consider only `bogo`, `discount`, and `informational` in the analysis.
 
+<p style="text-align:center; font-style:italic; font-size:small; padding:1em">
+Table 1. Missing values rates for all offers (left) and aggregated offer types (right)</p>
 <div class="flex-container">
     <div style="margin:10px;">
         <img src="./assets/missing_rate_table_all.png">
@@ -126,8 +128,7 @@ Since just few offers are presented to the customers, it was clear that the metr
         <img src="./assets/missing_rate_table_type.png">
     </div>
 </div>
-<p style="text-align:center; font-style:italic; font-size:small; padding:1em">
-Table 1. Missing values rates for all offers (left) and aggregated offer types (right)</p>
+
 
 #### _Offer Completion_
 I considered a conversion when an offer was completed only after being viewed. The median conversion rate for the `bogo` offers was only 33.3%  but 50.0% for `discount`. I chose to label customers as successful at converting the offer if they showed a 50% or higher conversion rate.
@@ -204,10 +205,13 @@ Figure 6. Distribution of the total spending over 30 days before (top panel) and
 
 The distribution of the amount spent per offer viewed appears to be be skewed, which can impact negatively the regression model (Figure 8). I tested a square root and log10 transformation and tested their impact on the model.
 
-<div>
-    <img src="assets/amount_spent_transformed.png">
-    <p class="cap">Figure 8. Distribution of amount spent per offer viewed (left panel) with <code>sqrt</code> (middle panel), and <code>log10</code> (right panel) transformations.</p>
+<div class="flex-container">
+    <div>
+        <img src="assets/amount_spent_transformed.png">
+        <p class="cap">Figure 8. Distribution of amount spent per offer viewed (left panel) with <code>sqrt</code> (middle panel), and <code>log10</code> (right panel) transformations.</p>
+    </div>
 </div>
+
 
 <!-- > Features and calculated statistics relevant to the problem have been reported and discussed related to the dataset, and a thorough description of the input space or input data has been made. Abnormalities or characteristics about the data or input that need to be addressed have been identified. -->
 
@@ -217,11 +221,24 @@ The distribution of the amount spent per offer viewed appears to be be skewed, w
 
 # Methodology
 ## Data Preprocessing
+The filtering and formatting steps taken for the exploration of data were explained in the previous section.
+
+Regarding the regression model few steps were implemented:
+1. Encoding of the `gender` in integers (with sklearn's `OneHotEncoder()`).
+2. Converting the date into a timestamp. That steps allowed to use the registration date as a continuous variable better suited for a linear regression.
+3. All features were scaled according to their median and IQR to decrease the effect of outlier values (with sklearn's `RobustScaler()`)  
+
+
 
 > All preprocessing steps have been clearly documented. Abnormalities or characteristics about the data or input that needed to be addressed have been corrected. If no data preprocessing is necessary, it has been clearly justified.
 
 ## Implementation
+The analysis was contained in a jupyter notebook calling few modules describe below.
 
+### `data_wrangling.py`:
+This module contains general methods use for data manipulation:
+- `load_data()`: loads, filters and format the portfolio, profile, and transcript datasets.
+- `expand_transcript`: specifically expand the dictionary contained in transcript containing `offer_id`, `transaction`, `amount`.
 
 > The process for which metrics, algorithms, and techniques were implemented with the given datasets or input data has been thoroughly documented. Complications that occurred during the coding process are discussed.
 
@@ -230,65 +247,101 @@ The distribution of the amount spent per offer viewed appears to be be skewed, w
 
 
 # Results
-## Model Evaluation and Validation
+## Model Evaluation, Validation, & Justification
 
-<div style="text-align:center">
-    <img src="assets/view_rate_table.png">
-    <img src="assets/viewing_rate.png" style="width:50%; padding:1em">
-    <p style="text-align:center; font-style:italic; font-size:small; padding:1em">Table 2. Viewing rate per offer</p>
+### Viewing Rate
+I found that:
+- 88% of the 14,487 customers left viewed all the presented offers,
+- 99% of them viewed over 66% of the presented offers,
+- 100% of the customers viewed at least 50% of the presented offers.
+
+<div class="flex-container">
+    <div class="flex-item">
+        <img src="assets/view_rate_table.png">
+    </div>
+    <div class="flex-item">
+        <img src="assets/viewing_rate.png">
+    </div>
+</div>
+<p class="cap">Figure X. Viewing rate per offer</p>
+
+With an average viewing rate of 97% across all offers, I concluded that all customers interacting positively with all offers. I did not push forward the discrimination of customers upon viewing rate but focused the analysis on the conversion from viewing an offer to completing an offer.
+
+### Conversion Tables
+As mentioned above, I segregated the customers' demographics into brackets and computed the conversion rate for each group. I also computed the cumulative total spending for each category, to assess the importance of each sub-group in the analysis. Throughout the 144 sub-groups, the maximum `total_spending` was \$ 151,850.52 with a median `total_spending` of \$ 1,938.09.
+
+Looking first at the top 10 conversion rates ordered for the `bogo` offers (Table 1), we can see that the first 7 groups have perfect conversion in both `bogo` in `discount` but represent relatively small `total_spending`.
+
+<div style="text-align:center; margin:20px">
+    <p class="cap">
+    Table 2. Top 10 conversion rates ordered by <code>bogo</code> offer.
+    </p>
+    <img src="./assets/res_table_bogo.png" width="600px">
 </div>
 
 
+The top 10 conversation rates by `total_spending` (Table 2) show that the age group 48 to 74 years old is the group that spent the most over the 30 days of observation. If the difference in conversion between `bogo` and `discount` is relatively small for the top-3, we can see interesting differences appear after the 4<sup>th</sup> row. For instance, the group of 48 to 74 years old male customers, that became member between August 2017 and August 2018 with an income ranging from 50k to 74k show a conversion rate below 50% but seem to favor the `discount` offers.
+
+<div style="text-align:center; margin:20px">
+    <p class="cap">
+    Table 3. Top 10 conversion rates ordered by <code>total_spending</code>.
+    </p>
+    <img src="./assets/res_table_spending.png" width="600px">
+</div>
+
+The top 10 conversion rates by the largest difference between `bogo` and `discount` (Table 4) is probably the table that would yield the best insights on how to drive future interventions. In that regard, the 48 to 74 years of age female customers that became members between July 2013 and August 2015 with an income below 50k seem not interested in the `bogo` offers but convert about 52% of the `discount` offers.
+
+<div style="text-align:center; margin:20px">
+    <p class="cap">
+    Table 4. Top 10 conversion rate ordered by maximum percentage points difference between <code>bogo</code> and <code>discount</code>.
+    </p>
+    <img src="./assets/res_table_max_diff.png" width="600px">
+</div>
+
+
+### Linear Regression Model
+In an attempt to provide a quantifiable, granular understanding of the spending habits of the customers and to predict the impact of each offer type on new customers, I tried to model the amount of dollar spent by offer type according to the limited number of features at my disposal (age, gender, date of registration, and income).
+
+After encoding the gender, and changing the date of registration into a timestamp in seconds, I added the individual total spending over 30 days as a feature to test the relevance of linear regression. Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yielded rather poor predictions: in the best model considering the `discount` offers, only 62% of the variance of the test dataset was explained by our predicted values of spending.
+
+<div class="flex-container">
+    <div class="flex-item">
+    <img src="./assets/truth_vs_preds.png">
+    <p class="cap">Figure X</p>
+    </div>
+    <div class="flex-item">
+    <p style="text-align:center; font-family:courier; font-size:mdeium">
+        "only 62% of the variance of the test dataset was explained by our predicted values of spending"
+    </p>
+    </div>
+</div>
 
 > If a model is used, the following should hold: The final model’s qualities — such as parameters — are evaluated in detail. Some type of analysis is used to validate the robustness of the model’s solution.
 
 > Alternatively a student may choose to answer questions with data visualizations or other means that don't involve machine learning if a different approach best helps them address their question(s) of interest.
 
-## Justification
 >The final results are discussed in detail.
 Exploration as to why some techniques worked better than others, or how improvements were made are documented.
 
 
 # Conclusion
 ## Reflection
+The exploratory approach was rather effective to provide insights on the conversion rates of selected subgroups, but only for the `bogo` and `discount` offer types. The top-10 conversion rate tables are probably a good first step in the direction of improving the delivery of these offers.
+
+It is important to note that this approach was possible because of the very small amount of features available which enable a visual inspection of the relationships between customers and offers. It is also possible that the program simulated the data created strong patterns easily identifiable, which could explain the almost perfect distribution of missing data in each offer type, or the very salient breaks in the different demographics, as can be seen in income vs. age (Figure X).
+
 >Student adequately summarizes the end-to-end problem solution and discusses one or two particular aspects of the project they found interesting or difficult.
 
 ## Improvement
+The general task of finding _" which demographic group responds better to which offer "_ was rather broad. I am sure that discussing further the goals to be achieved with the relevant Starbucks team would have greatly improved the definition of relevant metrics, and would have lead to the construction of a better model of the data.
+
 >Discussion is made as to how at least one aspect of the implementation could be improved. Potential solutions resulting from these improvements are considered and compared/contrasted to the current solution.
 
 <br>
 
-<!-- ---
----
-# __Background__
+_find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_
 
-
-
-To drive customers to the stores, it is paramount to understand how each customer interacts with the app, and in particular how each customer reacts to a specific offer.
-
-I first focused my interest on how often the offers were viewed, and then on how this was leading to some kind of conversion into sales.
-
-My approach was first, exploratory, and therefore I tried to visualize clusters of behavior among customer groups. Then, I tried to model these behaviors to predict how future participants might interact with each offer.
-
-
-# __What customer interactions look like?__
-
-
-
-
-
-- Distribution of offers type:
-
-
-- The completion is straightforward for the `bogo` and `discount` offers, and I will use this indicator to measure success in these cases. However, the measurement of success for the `informational` offers requires much more discussion as many metrics of success can be implemented.
-
-
-# __Offer Response__
-
-After filtering out customers with no demographic information (n = 2,175), the few customers that never received any offers (n = 5), and the customers that did not make any transactions (n = 333), I found that:
-- 88% of the 14,487 customers left viewed all the presented offers,
-- 99% of them viewed over 66% of the presented offers,
-- 100% of the customers viewed at least 50% of the presented offers.
+<!--
 
 <div>
 <p style="text-align:center; font-family:courier; font-size:2vw">
@@ -296,7 +349,6 @@ After filtering out customers with no demographic information (n = 2,175), the f
 </p>
 </div>
 
-With an average viewing rate of 97% across all offers, and all customers interacting positively with the app (> 50% viewing for all), we can now focus our attention on the conversion from viewing to actual sales.
 
 
 # __Offer Conversion__
@@ -305,65 +357,18 @@ As mentioned earlier the conversion for both the `bogo` and the `discount` offer
 
 
 
-I then segregated the customers' demographics into these brackets and computed the conversion rate for each group. I also computed the cumulative total spending for each category, to assess the importance of each sub-group in the analysis. Throughout the 144 sub-groups, the maximum `total_spending` was \$ 151,850.52 with a median `total_spending` of \$ 1,938.09.
 
-Looking first at the top 10 conversion rates ordered for the `bogo` offers (Table 1), we can see that the first 7 groups have perfect conversion in both `bogo` in `discount` but represent relatively small `total_spending`.
-
-<div style="text-align:center">
-<p style="text-align:center; font-style:italic">
-Table 1. Top 10 conversion rates ordered by <code>bogo</code> offer.
-</p>
-<img src="./assets/res_table_bogo.png" width="600px">
-</div>
-<br>
-
-The top 10 conversation rates by `total_spending` (Table 2) show that the age group 48 to 74 years old is the group that spent the most over the 30 days of observation. If the difference in conversion between `bogo` and `discount` is relatively small for the top-3, we can see interesting differences appear after the 4<sup>th</sup> row. For instance, the group of 48 to 74 years old male customers, that became member between August 2017 and August 2018 with an income ranging from 50k to 74k show a conversion rate below 50% but seem to favor the `discount` offers.
-
-<div style="text-align:center">
-<p style="text-align:center; font-style:italic">
-Table 2. Top 10 conversion rates ordered by <code>total_spending</code>.
-</p>
-<img src="./assets/res_table_spending.png" width="600px">
-</div>
-<br>
-
-The top 10 conversion rates by the largest difference between `bogo` and `discount` (Table 3) is probably the table that would yield the best insights on how to drive future interventions. In that regard, the 48 to 74 years of age female customers that became members between July 2013 and August 2015 with an income below 50k seem not interested in the `bogo` offers but convert about 52% of the `discount` offers.
-
-<div style="text-align:center">
-<p style="text-align:center; font-style:italic">
-Table 3. Top 10 conversion rate ordered by maximum percentage points difference between <code>bogo</code> and <code>discount</code>.
-</p>
-<img src="./assets/res_table_max_diff.png" width="600px">
-</div>
 
 
 # __A model of spending by offer type__
 
-In an attempt to provide a quantifiable, granular understanding of the spending habits of the customers and to predict the impact of each offer type on new customers, I tried to model the amount of dollar spent by offer type according to the limited number of features at my disposal (age, gender, date of registration, and income).
 
-After encoding the gender, and changing the date of registration into a timestamp in seconds, I added the individual total spending over 30 days as a feature to test the relevance of linear regression. Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yielded rather poor predictions: in the best model considering the `discount` offers, only 62% of the variance of the test dataset was explained by our predicted values of spending.
-
-<div style="width: 100%; overflow: hidden; position: relative;">
-    <div style="width:55% ; float: left; text-align: center;"><img src="./assets/truth_vs_preds.png" width="100%"></div>
-    <div style="margin-left:60%; text-align: center; margin: 0; position: absolute; top: 50%;  left: 55%; transform: translateY(-50%);">
-    <p style="text-align:center; font-family:courier; font-size:2vw">
-        "only 62% of the variance of the test dataset was explained by our predicted values of spending"
-    </p>
-    </div>
-</div>
 
 
 # __Final Thoughts:__
 
 
-The exploratory approach was rather effective to provide insights on the conversion rates of selected subgroups, but only for the `bogo` and `discount` offer types. The top-10 conversion rate tables are probably a good first step in the direction of improving the delivery of these offers.
 
-It is important to note that this approach was possible because of the very small amount of features available which enable a visual inspection of the relationships between customers and offers. It is also possible that the program simulated the data created strong patterns easily identifiable, which could explain the almost perfect distribution of missing data in each offer type, or the very salient breaks in the different demographics, as can be seen in income vs. age.
-
-The general task of finding _" which demographic group responds better to which offer "_ was rather broad. I am sure that discussing further the goals to be achieved with the relevant Starbucks team would have greatly improved the definition of relevant metrics, and would have lead to the construction of a better model of the data. -->
-
-
-_find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_
 
 <!-- css style -->
 <style>
@@ -377,6 +382,7 @@ _find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_
     align-items: center;
     justify-content: center;
     flex-direction: row;
+    max-width:100%;
 }
 .flex-item {
     margin: 10px;
@@ -385,7 +391,7 @@ _find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_
 .flex-item img {
    display: block;
    min-width: 200px;
-   max-width: 500px;
+   max-width: 400px;
    height: auto;
    margin: auto;
 }

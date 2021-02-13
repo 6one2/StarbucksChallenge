@@ -250,22 +250,23 @@ This module contains general methods use for data manipulation:
 ## Model Evaluation, Validation, & Justification
 
 ### Viewing Rate
-I found that:
 - 88% of the 14,487 customers left viewed all the presented offers,
 - 99% of them viewed over 66% of the presented offers,
 - 100% of the customers viewed at least 50% of the presented offers.
 
 <div class="flex-container">
     <div class="flex-item">
+        <p class="cap">Table X. Viewing rate per offer</p>
         <img src="assets/view_rate_table.png">
     </div>
     <div class="flex-item">
         <img src="assets/viewing_rate.png">
+        <p class="cap">Figure X. Distribution of viewing rate across all offers</p>
     </div>
 </div>
-<p class="cap">Figure X. Viewing rate per offer</p>
 
-With an average viewing rate of 97% across all offers, I concluded that all customers interacting positively with all offers. I did not push forward the discrimination of customers upon viewing rate but focused the analysis on the conversion from viewing an offer to completing an offer.
+
+With an average viewing rate of 97.46% across all offers, I concluded that all customers interacting positively with all offers. I did not push forward the discrimination of customers upon viewing rate but focused the analysis on the conversion from viewing an offer to completing an offer.
 
 ### Conversion Tables
 As mentioned above, I segregated the customers' demographics into brackets and computed the conversion rate for each group. I also computed the cumulative total spending for each category, to assess the importance of each sub-group in the analysis. Throughout the 144 sub-groups, the maximum `total_spending` was \$ 151,850.52 with a median `total_spending` of \$ 1,938.09.
@@ -372,7 +373,11 @@ As mentioned earlier the conversion for both the `bogo` and the `discount` offer
 
 <!-- css style -->
 <style>
-.cap{
+body {
+    text-align:justify;
+    text-justify: inter-word;
+}
+.cap {
     text-align: center;
     font-size: small;
     font-style:italic
@@ -383,6 +388,7 @@ As mentioned earlier the conversion for both the `bogo` and the `discount` offer
     justify-content: center;
     flex-direction: row;
     max-width:100%;
+    margin:20px;
 }
 .flex-item {
     margin: 10px;

@@ -118,23 +118,25 @@ The Figure 2 shows that all offer were evenly presented (~10% each) through of t
 #### _Missing Values per Offer_
 Since just few offers are presented to the customers, it was clear that the metric table would concentrate a lot of missing values. When I look closely at the missing values rate for each offer (Table 1) I found that about 63% of the offer received presented missing values in any offer. By aggregating offers by offer type the rate of missing values decreases drastically. This is another argument to consider only `bogo`, `discount`, and `informational` in the analysis.
 
-<div style="text-align:center">
-<img src="./assets/missing_rate_table_all.png" width="20%">
-<img src="./assets/missing_rate_table_type.png" width="20%">
-<p style="text-align:center; font-style:italic; font-size:small; padding:1em">
-Table 1. Missing values rates for all offers (left) and aggregated offer types (right)
-</p>
+<div class="flex-container">
+    <div style="margin:10px;">
+        <img src="./assets/missing_rate_table_all.png">
+    </div>
+    <div style="margin:10px;">
+        <img src="./assets/missing_rate_table_type.png">
+    </div>
 </div>
-
+<p style="text-align:center; font-style:italic; font-size:small; padding:1em">
+Table 1. Missing values rates for all offers (left) and aggregated offer types (right)</p>
 
 #### _Offer Completion_
 I considered a conversion when an offer was completed only after being viewed. The median conversion rate for the `bogo` offers was only 33.3%  but 50.0% for `discount`. I chose to label customers as successful at converting the offer if they showed a 50% or higher conversion rate.
 
-<div>
-<img src="assets/completion_rate.png">
-<p style="text-align:center; font-style:italic; font-size:small; padding:1em">
-Figure 3. Completion rates distribution for <code>bogo</code> (left) and <code>discount</code> (right).
-</p>
+<div style="text-align:center; max-width=100%">
+    <img src="assets/completion_rate.png" width="100%">
+    <p class="cap">
+    Figure 3. Completion rates distribution for <code>bogo</code> (left) and <code>discount</code> (right).
+    </p>
 </div>
 
 I decided to explore visually the distribution of the conversions over the different demographics looking at income vs. age (Figure 4), age vs. registration date (Figure 5, left), and income vs. registration date (Figure 5, right).
@@ -148,10 +150,10 @@ Figure 4. Customers age vs. income. The orange dots represent the customers that
 
 <div class="flex-container">
     <div class="flex-item">
-        <img src="./assets/AgeMember.png" width="100%">
+        <img src="./assets/AgeMember.png">
     </div>
     <div class="flex-item">
-        <img src="./assets/MemberIncome.png" width="100%">
+        <img src="./assets/MemberIncome.png">
     </div>
 </div>
 <p class="cap">
@@ -178,10 +180,10 @@ where Q<sub>3</sub> represents the third quartile (75% of the population) and IQ
 
 <div class="flex-container">
     <div class="flex-item">
-        <img src="./assets/amount_spent_before.png" width="100%">
+        <img src="./assets/amount_spent_before.png">
     </div>
     <div class="flex-item">
-        <img src="./assets/amount_spent_after.png" width="100%">
+        <img src="./assets/amount_spent_after.png">
     </div>
 </div>
 <p class="cap">
@@ -190,7 +192,7 @@ Figure 6. Distribution of the total spending over 30 days before (top panel) and
 
 <div class="flex-container">
     <div class="flex-item">
-        <img src="assets/amount_spent_ttest.png" width="400px">
+        <img src="assets/amount_spent_ttest.png" width="100%">
         <p style="text-align:center; font-style:italic; font-size:small">Figure 7. Distribution of the amount per viewed offer inn regards to the completion status for <code>bogo</code> and <code>discount</code></p>
     </div>
     <div class="flex-item">
@@ -231,9 +233,9 @@ The distribution of the amount spent per offer viewed appears to be be skewed, w
 ## Model Evaluation and Validation
 
 <div style="text-align:center">
-<img src="assets/view_rate_table.png">
-<img src="assets/viewing_rate.png" style="width:50%; padding:1em">
-<p style="text-align:center; font-style:italic; font-size:small; padding:1em">Table 2. Viewing rate per offer</p>
+    <img src="assets/view_rate_table.png">
+    <img src="assets/viewing_rate.png" style="width:50%; padding:1em">
+    <p style="text-align:center; font-style:italic; font-size:small; padding:1em">Table 2. Viewing rate per offer</p>
 </div>
 
 
@@ -372,13 +374,20 @@ _find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_
 }
 .flex-container {
     display: flex;
-    align-content: center;
+    align-items: center;
     justify-content: center;
     flex-direction: row;
 }
 .flex-item {
     margin: 10px;
     flex: 50%;
+}
+.flex-item img {
+   display: block;
+   min-width: 200px;
+   max-width: 500px;
+   height: auto;
+   margin: auto;
 }
 <!-- /* Responsive layout - makes a one column layout instead of a two-column layout */ -->
 @media (max-width: 800px) {

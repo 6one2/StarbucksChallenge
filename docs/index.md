@@ -178,10 +178,10 @@ where Q<sub>3</sub> represents the third quartile (75% of the population) and IQ
 
 <div class="flex-container">
     <div class="flex-item">
-        <img src="./assets/amount_spent_before.png">
+        <img src="./assets/amount_spent_before.png" width="100%">
     </div>
     <div class="flex-item">
-        <img src="./assets/amount_spent_after.png">
+        <img src="./assets/amount_spent_after.png" width="100%">
     </div>
 </div>
 <p class="cap">
@@ -190,7 +190,7 @@ Figure 6. Distribution of the total spending over 30 days before (top panel) and
 
 <div class="flex-container">
     <div class="flex-item">
-        <img src="assets/amount_spent_ttest.png">
+        <img src="assets/amount_spent_ttest.png" width="400px">
         <p style="text-align:center; font-style:italic; font-size:small">Figure 7. Distribution of the amount per viewed offer inn regards to the completion status for <code>bogo</code> and <code>discount</code></p>
     </div>
     <div class="flex-item">
@@ -370,27 +370,20 @@ _find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_
     font-size: small;
     font-style:italic
 }
-
 .flex-container {
+    display: flex;
     align-content: center;
     justify-content: center;
-    display: flex;
     flex-direction: row;
 }
-
 .flex-item {
     margin: 10px;
     flex: 50%;
 }
-
 <!-- /* Responsive layout - makes a one column layout instead of a two-column layout */ -->
 @media (max-width: 800px) {
   .flex-container {
     flex-direction: column;
   }
-}
-
-.img {
-    width:100%
 }
 </style>

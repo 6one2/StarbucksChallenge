@@ -23,7 +23,7 @@ def time_line(event, transactions=[], legend=False, xlabel=True, text=''):
     ymax = 1
     tag = 'VIEWED' if event.viewed > 0 else 'not viewed'
     Text = text + event.details['offer_type'] + ' / ' + tag
-    Text_code = text + event.details['code'] + ' / ' + tag
+    # Text_code = text + event.details['code'] + ' / ' + tag
     evt_list = event.events['event'].tolist()
     color_list = [color_evt[k] for k in evt_list]
 
@@ -32,7 +32,13 @@ def time_line(event, transactions=[], legend=False, xlabel=True, text=''):
 
     if len(transactions) > 0:
         ymax = transactions.amount.max()+5
-        ax.plot(transactions.time, transactions.amount, 'ko', mfc='white', ms=10)
+        ax.plot(
+            transactions.time,
+            transactions.amount,
+            'ko',
+            mfc='white',
+            ms=10
+        )
         ax.yaxis.set_visible(True)
         ax.set_ylabel('transaction $')
 
@@ -44,7 +50,12 @@ def time_line(event, transactions=[], legend=False, xlabel=True, text=''):
         ls=style_list,
         lw=3
     )
-    ax.fill_between(x=[event.start, event.end], y1=[0, 0], y2=[ymax, ymax], alpha=.2)
+    ax.fill_between(
+        x=[event.start, event.end],
+        y1=[0, 0],
+        y2=[ymax, ymax],
+        alpha=.2
+    )
     ax.text(
         0.01, 0.8,
         Text,

@@ -194,14 +194,13 @@ Figure 6. Distribution of the total spending over 30 days before (top panel) and
 <div class="flex-container">
     <div class="flex-item">
         <img src="assets/amount_spent_ttest.png" width="100%">
-        <p style="text-align:center; font-style:italic; font-size:small">Figure 7. Distribution of the amount per viewed offer inn regards to the completion status for <code>bogo</code> and <code>discount</code></p>
+        <p class="cap">Figure 7. Distribution of the amount per viewed offer according to the completion status for <code>bogo</code> and <code>discount</code></p>
     </div>
     <div class="flex-item">
     <p><h5>Metric validation</h5>After filtering I wanted to test if the amount spent would be a able to reflect the offer completion as defined above. I applied a t-test to compare the amount spent per offer viewed for customers considered successful at completing offers and customers that are not.</p>
     <p>In both <code>bogo</code> and <code>discount</code> the probability of the groups to be similar was largely below 5%. We can then consider that the groups are significantly different for one another in the amount they spent per viewed offer.</p>
     </div>
 </div>
-
 
 The distribution of the amount spent per offer viewed appears to be be skewed, which can impact negatively the regression model (Figure 8). I tested a square root and log10 transformation and tested their impact on the model.
 
@@ -251,49 +250,60 @@ This module contains the 2 classes necessary to run the analysis.
 - `Event()`: Object representing a received offer characterized by all details of the offer (see repository for details), and specifically the time of reception (_viewed_) and the time of completion (_completed_) that were crucial in the establishment of the viewing status, completion status, and the extraction of the amount spent by offer viewed.
 
 ### `data_modeling.py`:
+This module is dedicated to the linear regression model of the amount spent per viewed offer.
+- `filter_by_offer()`: creates Features (X) and target (y) for a specific offer
+- `build_model()`: encodes and scales X, normalizes y and creates pipeline for a Ridge regressor. A grid search systematically tested *alpha*, *max_iter* and *tol* of the model with 5-fold cross-validation.
+- `evaluate_model()`: creates evaluation metrics for the model. I considered the r<sup>2</sup> or *variance explained*, the *Mean Absolute Percentage Error* and the *Mean Absolute Error*
+- `run_model()`: runs all the steps of the model and represents the predicted values vs. true values.
 
 > The process for which metrics, algorithms, and techniques were implemented with the given datasets or input data has been thoroughly documented. Complications that occurred during the coding process are discussed.
 
 ## Refinement
-> The process of improving upon the algorithms and techniques used is clearly documented. Both the initial and final solutions are reported, along with intermediate solutions, if necessary.
+I recalibrated several times the creation of model. I realized that the filtering by *total_spending* was improving the model. This process was empirical, but I tried to follow the traditional definition of outliers.
+
+In a more systematical way, I tested, as mentioned above, several normalization functions to improve the model based on the observation of not normal distribution of the amount_viewed variable. The choice of the final normalization was driven by the *variance explained* achieved with each normalization.
 
 
 # Results
-## Model Evaluation, Validation, & Justification
+## Evaluation, Validation, & Justification
 
 ### Viewing Rate
-- 88% of the 14,487 customers left viewed all the presented offers,
-- 99% of them viewed over 66% of the presented offers,
-- 100% of the customers viewed at least 50% of the presented offers.
+<div class="flex-container">
+    <ul>
+        <li> 88% of the 14,487 customers viewed all the presented offers,
+        <li> 99% of them viewed over 66% of the presented offers,
+        <li> 100% of the customers viewed at least 50% of the presented offers.
+    </ul>
+</div>
 
 <div class="flex-container">
     <div class="flex-item">
-        <p class="cap">Table X. Viewing rate per offer</p>
+        <p class="cap">Table 2. Viewing rate per offer</p>
         <img src="assets/view_rate_table.png">
     </div>
     <div class="flex-item">
         <img src="assets/viewing_rate.png">
-        <p class="cap">Figure X. Distribution of viewing rate across all offers</p>
+        <p class="cap">Figure 9. Distribution of viewing rate across all offers</p>
     </div>
 </div>
 
 
-With an average viewing rate of 97.46% across all offers, I concluded that all customers interacting positively with all offers. I did not push forward the discrimination of customers upon viewing rate but focused the analysis on the conversion from viewing an offer to completing an offer.
+With an average viewing rate of 97.46% across all offers (Table 2), I concluded that all customers interacting positively with all offers. I did not push forward the discrimination of customers upon viewing rate but focused the analysis on the conversion from viewing an offer to completing an offer.
 
 ### Conversion Tables
 As mentioned above, I segregated the customers' demographics into brackets and computed the conversion rate for each group. I also computed the cumulative total spending for each category, to assess the importance of each sub-group in the analysis. Throughout the 144 sub-groups, the maximum `total_spending` was \$ 151,850.52 with a median `total_spending` of \$ 1,938.09.
 
-Looking first at the top 10 conversion rates ordered for the `bogo` offers (Table 1), we can see that the first 7 groups have perfect conversion in both `bogo` in `discount` but represent relatively small `total_spending`.
+<!-- Looking first at the top 10 conversion rates ordered for the `bogo` offers (Table 3), we can see that the first 7 groups have perfect conversion in both `bogo` in `discount` but represent relatively small `total_spending`.
 
 <div style="text-align:center; margin:20px">
     <p class="cap">
-    Table 2. Top 10 conversion rates ordered by <code>bogo</code> offer.
+    Table 3. Top 10 conversion rates ordered by <code>bogo</code> offer.
     </p>
     <img src="./assets/res_table_bogo.png" width="600px">
-</div>
+</div> -->
 
 
-The top 10 conversation rates by `total_spending` (Table 2) show that the age group 48 to 74 years old is the group that spent the most over the 30 days of observation. If the difference in conversion between `bogo` and `discount` is relatively small for the top-3, we can see interesting differences appear after the 4<sup>th</sup> row. For instance, the group of 48 to 74 years old male customers, that became member between August 2017 and August 2018 with an income ranging from 50k to 74k show a conversion rate below 50% but seem to favor the `discount` offers.
+The top 10 conversation rates by `total_spending` (Table 3) show that the age group 48 to 74 years old is the group that spent the most over the 30 days of observation. If the difference in conversion between `bogo` and `discount` is relatively small for the top 3, we can see interesting differences appear after the 4<sup>th</sup> row. For instance, the group of 48 to 74 years old male customers, that became member between August 2017 and August 2018 with an income ranging from 50k to 74k (Table 3, row #5) show a conversion rate below 50% but seem to favor the `discount` offers.
 
 <div style="text-align:center; margin:20px">
     <p class="cap">
@@ -302,7 +312,7 @@ The top 10 conversation rates by `total_spending` (Table 2) show that the age gr
     <img src="./assets/res_table_spending.png" width="600px">
 </div>
 
-The top 10 conversion rates by the largest difference between `bogo` and `discount` (Table 4) is probably the table that would yield the best insights on how to drive future interventions. In that regard, the 48 to 74 years of age female customers that became members between July 2013 and August 2015 with an income below 50k seem not interested in the `bogo` offers but convert about 52% of the `discount` offers.
+The top 10 conversion rates by the largest difference between `bogo` and `discount` (Table 4) is probably the table that would yield the best insights on how to drive future interventions. In that regard, the 48 to 74 years old female customers that became members between July 2013 and August 2015 with an income below 50k (Table 4, row #6) do not seem interested in the `bogo` offers but convert about 52% of the `discount` offers.
 
 <div style="text-align:center; margin:20px">
     <p class="cap">
@@ -313,9 +323,9 @@ The top 10 conversion rates by the largest difference between `bogo` and `discou
 
 
 ### Linear Regression Model
-In an attempt to provide a quantifiable, granular understanding of the spending habits of the customers and to predict the impact of each offer type on new customers, I tried to model the amount of dollar spent by offer type according to the limited number of features at my disposal (age, gender, date of registration, and income).
+In an attempt to provide a quantifiable, granular understanding of the spending habits of the customers and to predict the impact of each offer type on new customers, I tried to model the amount of dollar spent by offer type according to the limited number of features at my disposal (age, gender, date of registration, and income). I added the individual total spending over 30 days as a feature and tested the relevance of a linear regression.
 
-After encoding the gender, and changing the date of registration into a timestamp in seconds, I added the individual total spending over 30 days as a feature to test the relevance of linear regression. Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yielded rather poor predictions: in the best model considering the `discount` offers, only 62% of the variance of the test dataset was explained by our predicted values of spending.
+Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yielded rather poor predictions: the best model was found for the `discount` offers, but only 62% of the variance of the test dataset was explained by our predicted values of spending.
 
 <div class="flex-container">
     <div class="flex-item">
@@ -339,9 +349,9 @@ Exploration as to why some techniques worked better than others, or how improvem
 
 # Conclusion
 ## Reflection
-The exploratory approach was rather effective to provide insights on the conversion rates of selected subgroups, but only for the `bogo` and `discount` offer types. The top-10 conversion rate tables are probably a good first step in the direction of improving the delivery of these offers.
+The exploratory approach was rather effective to provide insights on the conversion rates of selected subgroups, but only for the `bogo` and `discount` offer types. The top 10 conversion rate tables are probably a good first step in the direction of improving the delivery of these offers.
 
-It is important to note that this approach was possible because of the very small amount of features available which enable a visual inspection of the relationships between customers and offers. It is also possible that the program simulated the data created strong patterns easily identifiable, which could explain the almost perfect distribution of missing data in each offer type, or the very salient breaks in the different demographics, as can be seen in income vs. age (Figure X).
+It is important to note that this approach was possible because of the very small amount of features available which enable a visual inspection of the relationships between customers and offers. It is also possible that the program simulated the data created strong patterns easily identifiable, which could explain the almost perfect distribution of missing data in each offer type, or the very salient breaks in the different demographics, as can be seen in income vs. age (Figure 4).
 
 >Student adequately summarizes the end-to-end problem solution and discusses one or two particular aspects of the project they found interesting or difficult.
 

@@ -8,28 +8,25 @@ PORTFOLIO, PROFILE, TRANSCRIPT = load_data('./data/')
 class Person():
     '''
     Customer Object
-    
+
     _id - Customer profile id
     data - DataFrame with all data associated to this customer
     offers - list of offer received ids
     total_spending - sum of all transactions
     '''
 
-    
     def __init__(self, _id):
         self._id = _id
         self.data = TRANSCRIPT.query('person == @_id')
         self.offers = self.data.query('event == "offer received"').index.tolist()
         self.total_spending = self.data['amount'].sum()
 
-        
     def get_transaction(self, start, end):
         if not any(self.data['event'] == 'transaction') or np.isnan(start):
             return []
 
         return self.data.query('(event == "transaction") & (@start <= time <= @end)')[['time', 'amount']]
 
-    
     def get_reward(self, start, end):
         if not any(self.data['event'] == 'offer completed') or np.isnan(start):
             return []
@@ -41,7 +38,7 @@ class Event():
     '''
     Offer received Object
     '''
-    
+
     def __init__(self, _id: int, df):
         '''
         INPUTS

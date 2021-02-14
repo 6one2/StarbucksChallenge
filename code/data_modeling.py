@@ -17,7 +17,7 @@ from sklearn.metrics import r2_score, mean_squared_error, mean_absolute_error, m
 from code.data_wrangling import load_from_db
 
 # load PROFILE for filter_by_offer()
-_, PROFILE = load_from_db()
+TARGET, PROFILE = load_from_db()
 
 
 def power_2(x):
@@ -28,23 +28,54 @@ def power_2(x):
     return x**2
 
 
-def filter_by_offer(df, offer_name: str):
+def remove_outliers():
     '''
-    Extract data for offer_name only
-    Remove offer with no spending
-    Convert datetime into timestamp to be used as numerical variable
+    remove total_spending outliers between $5 and upper bound of IQR
+    
+    OUTPUT
+    list of profile id of filtered customers
+    '''
+    
+    q3 = PROFILE.total_spending.quantile(0.75)
+    q1 = PROFILE.total_spending.quantile(0.25)
+    upper_bound = q3 + 1.5 * (q3-q1)
+    lower_bound = 5 # $5 over 30 days.
+    profile_id_filtered = PROFILE.query('@lower_bound < total_spending < @upper_bound').index.tolist()
+    
+    return profile_id_filtered
+    
+
+def filter_by_offer(offer_name: str):
+    '''
+    Extract Features (X) and Target (y)  for offer_name only
+    1. Remove customers with no spending and higher spenders outliers (from PROFILE)
+    2. Aggregate 'amount_viewed' by 'profile_id' and 'portfolio_type' (from TARGET)
+    3. Convert datetime into timestamp to be used as numerical variable (from PROFILE)
     ---
     INPUTS
-    df - dataframe with amount_viewed for each offer per customer
     offer_name - 'bogo', 'discount' or 'informational'
     ---
     OUTPUTS
-    X - features
-    y - target
+    X - features ('gender', 'age', 'became_member_on', 'income', 'total_spending', 'total_offers')
+    y - target ('amount_viewed')
     '''
-    Y = df.query('(portfolio_type == @offer_name) & (amount_viewed != 0)')['amount_viewed']
+    
+    # filters out profile and target
+    profile_id_filtered = remove_outliers()
+    target_id = TARGET.profile_id
+    id_filtered = list(set(target_id).intersection(set(profile_id_filtered)))
+    TARGET_filtered = TARGET.query('profile_id in @id_filtered')
+    
+    # aggregates amount_viewed over profile_id and portfolio
+    df = TARGET_filtered.groupby(['profile_id', 'portfolio_type'])['amount_viewed']\
+        .mean()\
+        .unstack()
+    
+    # creates y
+    Y = df[df[offer_name] > 0][offer_name]
     y = Y.values.ravel()
-
+    
+    # creates X (transform date to timestamp)
     X = PROFILE.loc[Y.index, :]
     X['became_member_on'] = X['became_member_on'].apply(lambda x: x.timestamp())
 
@@ -134,8 +165,10 @@ def evaluate_model(model, X_test, y_test):
     return r2, Mean_Abs_Perc_Err, Mean_Abs_Err, RMS_Err, y_pred
 
 
-def run_model(X, y, norm_func=None):
-
+def run_model(offer_name:str, norm_func=None):
+    
+    X, y = filter_by_offer(offer_name)
+    
     X_train, X_test, y_train, y_test = train_test_split(X, y, test_size=0.25)
     CAT_COL = ['gender']
     CON_COL = ['age', 'became_member_on', 'income', 'total_spending', 'total_offers']

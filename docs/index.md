@@ -325,19 +325,54 @@ The top 10 conversion rates by the largest difference between `bogo` and `discou
 ### Linear Regression Model
 In an attempt to provide a quantifiable, granular understanding of the spending habits of the customers and to predict the impact of each offer type on new customers, I tried to model the amount of dollar spent by offer type according to the limited number of features at my disposal (age, gender, date of registration, and income). I added the individual total spending over 30 days as a feature and tested the relevance of a linear regression.
 
-Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yielded rather poor predictions: the best model was found for the `discount` offers, but only 62% of the variance of the test dataset was explained by our predicted values of spending.
+The grid search testing consistently showed best performance for a Ridge regression with the following parameters:
+
+|parameter|value |
+|:--------|:----:|
+|alpha    | 0.1  |
+|max_iter | None |
+|tol      | 0.001|
+
+Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yielded rather poor predictions: the best model was found for the `discount` offers, but only about 63% of the variance of the test dataset was explained by our predicted values of spending.
+
+<div class="flex-container" style="background-color:#EBF7F9; border-radius:20px">
+    <div class="flex-item">
+        <img src="./assets/truth_vs_preds_bogo_None.png">
+    </div>
+    <div class="flex-item">
+        <img src="./assets/truth_vs_preds_discount_None.png">
+    </div>
+    <div class="flex-item">
+        <img src="./assets/truth_vs_preds_informational_None.png">
+    </div>
+</div>
+<p class="cap">Figure X. No transformation</p>
 
 <div class="flex-container">
     <div class="flex-item">
-    <img src="./assets/truth_vs_preds.png">
-    <p class="cap">Figure X</p>
+        <img src="./assets/truth_vs_preds_bogo_np.sqrt.png">
     </div>
     <div class="flex-item">
-    <p style="text-align:center; font-family:courier; font-size:mdeium">
-        "only 62% of the variance of the test dataset was explained by our predicted values of spending"
-    </p>
+        <img src="./assets/truth_vs_preds_discount_np.sqrt.png">
+    </div>
+    <div class="flex-item">
+        <img src="./assets/truth_vs_preds_informational_np.sqrt.png">
     </div>
 </div>
+<p class="cap">Figure X. <code>sqrt</code> transformation</p>
+
+<div class="flex-container">
+    <div class="flex-item">
+        <img src="./assets/truth_vs_preds_bogo_np.log10.png">
+    </div>
+    <div class="flex-item">
+        <img src="./assets/truth_vs_preds_discount_np.log10.png">
+    </div>
+    <div class="flex-item">
+        <img src="./assets/truth_vs_preds_informational_np.log10.png">
+    </div>
+</div>
+<p class="cap">Figure X. <code>log10</code> transformation</p>
 
 > If a model is used, the following should hold: The final model’s qualities — such as parameters — are evaluated in detail. Some type of analysis is used to validate the robustness of the model’s solution.
 
@@ -364,40 +399,15 @@ The general task of finding _" which demographic group responds better to which 
 
 _find the full analysis [there](https://github.com/6one2/StarbucksChallenge)_
 
-<!--
-
-<div>
-<p style="text-align:center; font-family:courier; font-size:2vw">
-    "All customers viewed at least 50% of the offers presented to them. 88% of the customers viewed all the offers presented to them."
-</p>
-</div>
-
-
-
-# __Offer Conversion__
-
-As mentioned earlier the conversion for both the `bogo` and the `discount` offers was very clear: _offer marked as completed in the `transcript` data set_. For this reason and the fact that the presentation rate of these 2 offers was similar, I chose to focus on the comparison of these 2 offers only in the rest of this section.
-
-
-
-
-
-
-# __A model of spending by offer type__
-
-
-
-
-# __Final Thoughts:__
-
-
-
 
 <!-- css style -->
 <style>
 body {
     text-align:justify;
     text-justify: inter-word;
+}
+table {
+    padding-left:45%
 }
 .cap {
     text-align: center;
@@ -413,7 +423,7 @@ body {
     margin:20px;
 }
 .flex-item {
-    margin: 10px;
+    margin: 1px;
     flex: 50%;
 }
 .flex-item img {

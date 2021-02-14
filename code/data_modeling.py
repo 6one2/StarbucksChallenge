@@ -3,6 +3,7 @@ import numpy as np
 import scipy as sp
 
 import matplotlib.pyplot as plt
+from matplotlib.offsetbox import AnchoredText
 from statsmodels.graphics.api import abline_plot
 import pprint
 
@@ -137,7 +138,7 @@ def build_model(CAT_COL, CON_COL, func_name=None):
 
     model = GridSearchCV(pipe, params, cv=5)
 
-    return model, func_str
+    return model
 
 
 def evaluate_model(model, X_test, y_test):
@@ -174,7 +175,7 @@ def run_model(offer_name:str, norm_func=None):
     CON_COL = ['age', 'became_member_on', 'income', 'total_spending', 'total_offers']
 
     print('Building model...')
-    model, func_str = build_model(CAT_COL, CON_COL, func_name=norm_func)
+    model = build_model(CAT_COL, CON_COL, func_name=norm_func)
 
     print('Training model...')
     model.fit(X_train, y_train)
@@ -188,14 +189,30 @@ def run_model(offer_name:str, norm_func=None):
     print(f'Which represent on average ${Mean_Abs_Err:.2f}')
 
     if True:
+        
+        res_text = f'$r^{{2}}$: {r2:.2%}\nRMSE: \${RMS_Err:.2f}'
+        
         f, ax = plt.subplots(figsize=[8, 8])
         plt.scatter(y_test, y_pred)
         abline_plot(intercept=0, slope=1, color="red", ax=ax, ls='--', lw=2)
+        
+        anchored_text = AnchoredText(
+            res_text, 
+            loc='lower right', 
+            frameon=False, 
+            prop={
+                'weight':'light',
+                'size':16
+            }
+        )
+        ax.add_artist(anchored_text)
+        
         ax.set_xlabel('Truth')
         ax.set_ylabel('Prediction')
-        ax.set_title(f'Transformation: {func_str}', weight='bold', fontsize=16)
+        ax.set_title(f'Offer: {offer_name} - Transformation: {norm_func}', weight='bold', fontsize=16)
         plt.show()
 
-        if False:
-            ax.set_title("Discount Offer", weight='bold', fontsize=16)
-            f.savefig('./docs/assets/truth_vs_preds.png', transparent=True, dpi=150)
+        if True:
+            path_fig = './docs/assets/'
+            fig_name = 'truth_vs_preds' + f'_{offer_name}' + f'_{norm_func}' + '.png'
+            f.savefig(path_fig+fig_name, transparent=True, dpi=150)

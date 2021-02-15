@@ -1,10 +1,12 @@
-<div max-width="100%">
-<img src="./assets/niels-kehl-6hpbjaAubDc-unsplash.jpg" width="100%">
-<span>Photo by <a href="https://unsplash.com/@photographybyniels?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Niels Kehl</a> on <a href="https://unsplash.com/s/photos/starbucks?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
-</div>
-<br>
 <div class="flex-container">
-    <div class="flex-item"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" width="200px" style="border-radius: 50%; border: 5px solid Teal"></a></div>
+    <img src="./assets/niels-kehl-6hpbjaAubDc-unsplash.jpg" style="width:100%;" >
+</div>
+<span>Photo by <a href="https://unsplash.com/@photographybyniels?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Niels Kehl</a> on <a href="https://unsplash.com/s/photos/starbucks?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+
+
+<div class="flex-container">
+    <div class="flex-item"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" style="border-radius: 50%; border: 5px solid Teal; max-width: 200px"></a>
+    </div>
     <div class="flex-item"><h1 style="font-weight:bold;">Summary</h1><p>In this exercise on simulated data of Starbucks marketing offers, the task was to identify which offer customers like best. I extracted relevant brackets of demographics and presented actionable conversion rates for each offer type. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the sparsity of data and the relatively small number of available features.</p>
     </div>
 </div>
@@ -95,11 +97,13 @@ By iterating through all the offers received by customer, I gathered the amount 
 #### _Time-line_
 For the generation this main metric table `RES`, I created a visualization of the time-line of event (Figure 1) to better understand how to assign the transactions to specific offers. This visualization was also useful to test and verified the implementation of the analysis.
 
-<div max-width="100%">
-<img src="./assets/Timeline.png" width="100%">
-<p style="text-align:center; font-style:italic; font-size:small">
-Figure 1. Timeline of events for one customer. Red lines represent the reception of an offer. Blue lines represent the moment the offer was viewed. Yellow lines show when an offer was completed. Black lines (solid and dashed) represent the occurrence of a transaction.
-</p>
+<div class="flex-container">
+    <div class="flex-item">
+        <img src="./assets/Timeline.png">
+        <p class="cap">
+        Figure 1. Timeline of events for one customer. Red lines represent the reception of an offer. Blue lines represent the moment the offer was viewed. Yellow lines show when an offer was completed. Black lines (solid and dashed) represent the occurrence of a transaction.
+        </p>
+    </div>
 </div>
 <br>
 
@@ -107,10 +111,12 @@ Figure 1. Timeline of events for one customer. Red lines represent the reception
 #### _Offer distribution_
 The Figure 2 shows that all offer were evenly presented (~10% each) through of the dataset. This means that by considering only <code>bogo</code> and `discount` offers in a first analysis, 80% of the offer received (40% for `bogo` and 40% for `discount`) were accounted for.
 
- <div max-width="100%" style="text-align:center;">
- <img src="./assets/offer_dist_pie.png" width="60%">
- <p style="text-align:center; font-style:italic; font-size:small;">
- Figure 2. Distribution of each offer. The transcript of event was evenly split with each offer represented 10% of all offer received.</p>
+ <div class="flex-container">
+    <div class="flex-item">
+        <img src="./assets/offer_dist_pie.png" width="600px">
+        <p class="cap">
+        Figure 2. Distribution of each offer. The transcript of event was evenly split with each offer represented 10% of all offer received.</p>
+    </div>
  </div>
  <br>
 
@@ -121,10 +127,10 @@ Since just few offers are presented to the customers, it was clear that the metr
 <p style="text-align:center; font-style:italic; font-size:small; padding:1em">
 Table 1. Missing values rates for all offers (left) and aggregated offer types (right)</p>
 <div class="flex-container">
-    <div style="margin:10px;">
+    <div style="margin:5px">
         <img src="./assets/missing_rate_table_all.png">
     </div>
-    <div style="margin:10px;">
+    <div style="margin:5px">
         <img src="./assets/missing_rate_table_type.png">
     </div>
 </div>
@@ -133,20 +139,24 @@ Table 1. Missing values rates for all offers (left) and aggregated offer types (
 #### _Offer Completion_
 I considered a conversion when an offer was completed only after being viewed. The median conversion rate for the `bogo` offers was only 33.3%  but 50.0% for `discount`. I chose to label customers as successful at converting the offer if they showed a 50% or higher conversion rate.
 
-<div style="text-align:center; max-width=100%">
-    <img src="assets/completion_rate.png" width="100%">
-    <p class="cap">
-    Figure 3. Completion rates distribution for <code>bogo</code> (left) and <code>discount</code> (right).
-    </p>
+<div class="flex-container">
+    <div class="flex-item">
+        <img src="assets/completion_rate.png" width="100%">
+        <p class="cap">
+        Figure 3. Completion rates distribution for <code>bogo</code> (left) and <code>discount</code> (right).
+        </p>
+    </div>
 </div>
 
 I decided to explore visually the distribution of the conversions over the different demographics looking at income vs. age (Figure 4), age vs. registration date (Figure 5, left), and income vs. registration date (Figure 5, right).
 
-<div max-width="100%" style="text-align:center">
-<img src="./assets/AgeIncome.png" width="100%">
-<p class="cap">
-Figure 4. Customers age vs. income. The orange dots represent the customers that completed the <code>bogo</code> offers and blue dots represent customers that did not complete the offers. The size of the dots represents the gender of the customers.
-</p>
+<div class="flex-container">
+    <div class="flex-item">
+        <img src="./assets/AgeIncome.png" width="100%">
+        <p class="cap">
+        Figure 4. Customers age vs. income. The orange dots represent the customers that completed the <code>bogo</code> offers and blue dots represent customers that did not complete the offers. The size of the dots represents the gender of the customers.
+        </p>
+    </div>
 </div>
 
 <div class="flex-container">
@@ -205,7 +215,7 @@ Figure 6. Distribution of the total spending over 30 days before (top panel) and
 The distribution of the amount spent per offer viewed appears to be be skewed, which can impact negatively the regression model (Figure 8). I tested a square root and log10 transformation and tested their impact on the model.
 
 <div class="flex-container">
-    <div>
+    <div class="flex-item">
         <img src="assets/amount_spent_transformed.png">
         <p class="cap">Figure 8. Distribution of amount spent per offer viewed (left panel) with <code>sqrt</code> (middle panel), and <code>log10</code> (right panel) transformations.</p>
     </div>
@@ -268,13 +278,11 @@ In a more systematical way, I tested, as mentioned above, several normalization 
 ## Evaluation, Validation, & Justification
 
 ### Viewing Rate
-<div class="flex-container">
-    <ul>
-        <li> 88% of the 14,487 customers viewed all the presented offers,
-        <li> 99% of them viewed over 66% of the presented offers,
-        <li> 100% of the customers viewed at least 50% of the presented offers.
-    </ul>
-</div>
+
+- 88% of the 14,487 customers viewed all the presented offers,
+- 99% of them viewed over 66% of the presented offers,
+- 100% of the customers viewed at least 50% of the presented offers.
+
 
 <div class="flex-container">
     <div class="flex-item">
@@ -305,22 +313,25 @@ As mentioned above, I segregated the customers' demographics into brackets and c
 
 The top 10 conversation rates by `total_spending` (Table 3) show that the age group 48 to 74 years old is the group that spent the most over the 30 days of observation. If the difference in conversion between `bogo` and `discount` is relatively small for the top 3, we can see interesting differences appear after the 4<sup>th</sup> row. For instance, the group of 48 to 74 years old male customers, that became member between August 2017 and August 2018 with an income ranging from 50k to 74k (Table 3, row #5) show a conversion rate below 50% but seem to favor the `discount` offers.
 
-<div style="text-align:center; margin:20px">
-    <p class="cap">
-    Table 3. Top 10 conversion rates ordered by <code>total_spending</code>.
-    </p>
-    <img src="./assets/res_table_spending.png" width="600px">
+<div class="flex-container">
+    <div class="flex-item">
+        <p class="cap">
+        Table 3. Top 10 conversion rates ordered by <code>total_spending</code>.
+        </p>
+        <img src="./assets/res_table_spending.png">
+    </div>
 </div>
 
 The top 10 conversion rates by the largest difference between `bogo` and `discount` (Table 4) is probably the table that would yield the best insights on how to drive future interventions. In that regard, the 48 to 74 years old female customers that became members between July 2013 and August 2015 with an income below 50k (Table 4, row #6) do not seem interested in the `bogo` offers but convert about 52% of the `discount` offers.
 
-<div style="text-align:center; margin:20px">
-    <p class="cap">
-    Table 4. Top 10 conversion rate ordered by maximum percentage points difference between <code>bogo</code> and <code>discount</code>.
-    </p>
-    <img src="./assets/res_table_max_diff.png" width="600px">
+<div class="flex-container">
+    <div class="flex-item">
+        <p class="cap">
+        Table 4. Top 10 conversion rate ordered by maximum percentage points difference between <code>bogo</code> and <code>discount</code>.
+        </p>
+        <img src="./assets/res_table_max_diff.png">
+    </div>
 </div>
-
 
 ### Linear Regression Model
 In an attempt to provide a quantifiable, granular understanding of the spending habits of the customers and to predict the impact of each offer type on new customers, I tried to model the amount of dollar spent by offer type according to the limited number of features at my disposal (age, gender, date of registration, and income). I added the individual total spending over 30 days as a feature and tested the relevance of a linear regression.
@@ -333,7 +344,7 @@ The grid search testing consistently showed best performance for a Ridge regress
 |max_iter | None |
 |tol      | 0.001|
 
-Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yielded rather poor predictions: the best model was found for the `discount` offers, but only about 63% of the variance of the test dataset was explained by our predicted values of spending.
+The Figure 10, 11, and 12 show the scatter plots of true values versus predicted values of amount spent for viewed offers for respectively, no transformation, a `sqrt` transformation, and a `log10` transformation. After review, the models with no transformation performs slightly better than the other transformations despite the skewness of the original data.
 
 <div class="flex-container" style="background-color:#EBF7F9; border-radius:20px">
     <div class="flex-item">
@@ -346,7 +357,7 @@ Unfortunately, after testing several tunings of data filtering, normalization, a
         <img src="./assets/truth_vs_preds_informational_None.png">
     </div>
 </div>
-<p class="cap">Figure X. No transformation</p>
+<p class="cap">Figure 10. True values versus predicted values of amount spent for viewed offer with no transformation</p>
 
 <div class="flex-container">
     <div class="flex-item">
@@ -359,7 +370,7 @@ Unfortunately, after testing several tunings of data filtering, normalization, a
         <img src="./assets/truth_vs_preds_informational_np.sqrt.png">
     </div>
 </div>
-<p class="cap">Figure X. <code>sqrt</code> transformation</p>
+<p class="cap">Figure 11. True values versus predicted values of amount spent for viewed offer with a <code>sqrt</code> transformation</p>
 
 <div class="flex-container">
     <div class="flex-item">
@@ -372,7 +383,9 @@ Unfortunately, after testing several tunings of data filtering, normalization, a
         <img src="./assets/truth_vs_preds_informational_np.log10.png">
     </div>
 </div>
-<p class="cap">Figure X. <code>log10</code> transformation</p>
+<p class="cap">Figure 12. True values versus predicted values of amount spent for viewed offer with a <code>log10</code> transformation</p>
+
+Unfortunately, after testing several tunings of data filtering, normalization, and model parameters it appears that a linear model yielded rather poor predictions: the best model was found for the `discount` offers, but only about 63% of the variance of the test dataset was explained by our predicted values of spending.
 
 > If a model is used, the following should hold: The final model’s qualities — such as parameters — are evaluated in detail. Some type of analysis is used to validate the robustness of the model’s solution.
 
@@ -419,20 +432,23 @@ table {
     align-items: center;
     justify-content: center;
     flex-direction: row;
-    max-width:100%;
-    margin:20px;
+    max-width: 1232px;
+    width: 100%;
+    <!-- background-color:cyan; -->
 }
 .flex-item {
-    margin: 1px;
+    margin: auto;
     flex: 50%;
+    max-width:800px;
+    <!-- background-color: grey; -->
 }
-.flex-item img {
+.flex-container img, .flex-item img {
    display: block;
-   min-width: 200px;
-   max-width: 400px;
    height: auto;
    margin: auto;
 }
+
+
 <!-- /* Responsive layout - makes a one column layout instead of a two-column layout */ -->
 @media (max-width: 800px) {
   .flex-container {

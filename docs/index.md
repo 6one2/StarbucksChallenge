@@ -5,9 +5,14 @@
 
 
 <div class="flex-container">
-    <div class="flex-item"><a href="https://6one2.github.io/Seb-Villard-Resume/"><img src="./assets/profile.jpg" style="border-radius: 50%; border: 5px solid Teal; max-width: 200px"></a>
+    <div class="flex-item">
+        <a href="https://6one2.github.io/Seb-Villard-Resume/">
+            <img src="./assets/profile.jpg" style="border-radius: 50%; border: 4px solid Teal; width:200px">
+        </a>
     </div>
-    <div class="flex-item"><h1 style="font-weight:bold;">Summary</h1><p>In this exercise on simulated data of Starbucks marketing offers, the task was to identify which offer customers like best. I extracted relevant brackets of demographics and presented actionable conversion rates for each offer type. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the sparsity of data and the relatively small number of available features.</p>
+    <div class="flex-item">
+        <h1 style="font-weight:bold;">Summary</h1>
+        <p>In this exercise on simulated data of Starbucks marketing offers, the task was to identify which offer customers like best. I extracted relevant brackets of demographics and presented actionable conversion rates for each offer type. The effort to present a more granular quantification of the customers' performance in terms of spending for each offer was tempered by the sparsity of data and the relatively small number of available features.</p>
     </div>
 </div>
 
@@ -433,7 +438,6 @@ table {
     justify-content: center;
     flex-direction: row;
     max-width: 1232px;
-    width: 100%;
     <!-- background-color:cyan; -->
 }
 .flex-item {

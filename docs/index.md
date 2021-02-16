@@ -1,13 +1,13 @@
 <div class="flex-container">
     <img src="./assets/niels-kehl-6hpbjaAubDc-unsplash.jpg" style="width:100%;" >
 </div>
-<span>Photo by <a href="https://unsplash.com/@photographybyniels?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Niels Kehl</a> on <a href="https://unsplash.com/s/photos/starbucks?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></span>
+<p>Photo by <a href="https://unsplash.com/@photographybyniels?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Niels Kehl</a> on <a href="https://unsplash.com/s/photos/starbucks?utm_source=unsplash&amp;utm_medium=referral&amp;utm_content=creditCopyText">Unsplash</a></p>
 
 
 <div class="flex-container">
     <div class="flex-item">
         <a href="https://6one2.github.io/Seb-Villard-Resume/">
-            <img src="./assets/profile.jpg" style="border-radius: 50%; border: 4px solid Teal; width:200px">
+            <img src="./assets/profile.jpg" style="border-radius: 50%; border: 4px solid Teal; width:200px; margin:auto">
         </a>
     </div>
     <div class="flex-item">
@@ -245,7 +245,7 @@ Regarding the regression model few steps were implemented:
 
 The step #1 was implemented in `data_modeling.filter_by_offer()`. Steps #2 and #3 were implemented in `data_modeling.build_model()` and integrated into the pipeline that fed a grid search to estimate the best performance and the best model parameters.
 
-> All preprocessing steps have been clearly documented. Abnormalities or characteristics about the data or input that needed to be addressed have been corrected. If no data preprocessing is necessary, it has been clearly justified.
+<!-- > All preprocessing steps have been clearly documented. Abnormalities or characteristics about the data or input that needed to be addressed have been corrected. If no data preprocessing is necessary, it has been clearly justified. -->
 
 ## Implementation
 The analysis was contained in a jupyter notebook calling few modules located in the `./code/` directory and describe below.
@@ -274,7 +274,7 @@ This module is dedicated to the linear regression model of the amount spent per 
 - `evaluate_model()`: creates evaluation metrics for the model. I considered the r<sup>2</sup> or *variance explained*, the *Mean Absolute Percentage Error* and the *Mean Absolute Error*
 - `run_model()`: runs all the steps of the model and represents the predicted values vs. true values.
 
-> The process for which metrics, algorithms, and techniques were implemented with the given datasets or input data has been thoroughly documented. Complications that occurred during the coding process are discussed.
+<!-- > The process for which metrics, algorithms, and techniques were implemented with the given datasets or input data has been thoroughly documented. Complications that occurred during the coding process are discussed. -->
 
 ## Refinement
 I recalibrated several times the creation of the model. I realized that the filtering by *total_spending* was improving the model. This process was empirical, but I tried to follow the traditional definition of outliers.
@@ -454,7 +454,7 @@ table {
 .flex-container img, .flex-item img {
    display: block;
    height: auto;
-   width: auto;
+   width: 100%;
    margin: auto;
 }
 

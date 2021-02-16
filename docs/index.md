@@ -5,9 +5,10 @@
 
 
 <div class="flex-container">
-    <div class="flex-item">
+    <div class="flex-item" style="text-align:center">
         <a href="https://6one2.github.io/Seb-Villard-Resume/">
             <img src="./assets/profile.jpg" style="border-radius: 50%; border: 4px solid Teal; width:200px; margin:auto">
+            <p style="font: italic bold 16pt courier; margin:10px">Sebastien Villard</p>
         </a>
     </div>
     <div class="flex-item">
@@ -454,7 +455,6 @@ table {
 .flex-container img, .flex-item img {
    display: block;
    height: auto;
-   width: 100%;
    margin: auto;
 }
 

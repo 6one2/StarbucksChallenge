@@ -6,9 +6,12 @@
 
 <div class="flex-container">
     <div class="flex-item" style="text-align:center">
-        <a href="https://6one2.github.io/Seb-Villard-Resume/">
+        <a href="https://6one2.github.io/Seb-Villard-Resume/" style="hover:">
             <img src="./assets/profile.jpg" style="border-radius: 50%; border: 4px solid Teal; width:200px; margin:auto">
-            <p style="font: italic bold 16pt courier; margin:10px">Sebastien Villard</p>
+            <div style="margin: 10px auto; width:200px; border-radius: 20px; box-shadow: 5px 5px 10px teal; color:teal;">
+            <p style="font: bold 14pt Helvetica; padding-top:10px">Sébastien Villard</p>
+            <p style="font: bold 12pt courier;padding-bottom:10px">- resume -</p>
+            </div>
         </a>
     </div>
     <div class="flex-item">
@@ -432,6 +435,15 @@ body {
 }
 table {
     padding-left:20%
+}
+a div {
+    background-color: rgba(0, 128, 128, 0.5);
+}
+a:hover div {
+    background-color: rgba(0, 128, 128, 0.3);
+}
+a:link {
+    text-decoration: none;
 }
 .cap {
     text-align: center;

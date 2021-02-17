@@ -7,7 +7,7 @@
 <div class="flex-container">
     <div class="flex-item" style="text-align:center">
         <a href="https://6one2.github.io/Seb-Villard-Resume/" style="hover:">
-            <img src="./assets/profile.jpg" style="border-radius: 50%; border: 4px solid Teal; width:200px; margin:auto">
+            <img src="./assets/profile.jpg" style="border-radius: 20px; width:200px; margin:auto; box-shadow: 5px 5px 10px teal;">
             <div style="margin: 10px auto; width:200px; border-radius: 20px; box-shadow: 5px 5px 10px teal; color:teal;">
             <p style="font: bold 14pt Helvetica; padding-top:10px">Sébastien Villard</p>
             <p style="font: bold 12pt courier;padding-bottom:10px">- resume -</p>
